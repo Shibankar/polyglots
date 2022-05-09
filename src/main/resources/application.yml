@@ -8,8 +8,8 @@ spring:
 appdb:
   datasource:
     jdbc-url: "jdbc:postgresql://ap-south-1.a29d4f8e-c5b6-46f4-aa6c-f021edd42132.aws.ybdb.io:5433/yugabyte?ssl=true&sslmode=verify-full&sslrootcert=/Users/shibankar/Documents/root.crt"
-    username: "admin"
-    password: "DJiuHfNYb8e5Z-yO0p304wQsbkTazG"
+    username: ""
+    password: ""
     pool-name: "Hikari-yb-pool"
 
 
