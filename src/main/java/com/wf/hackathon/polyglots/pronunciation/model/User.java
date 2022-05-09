@@ -1,24 +1,31 @@
 package com.wf.hackathon.polyglots.pronunciation.model;
 
-import org.springframework.data.annotation.Id;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.util.Date;
 
-//@Entity
-//@Table(name = "user_pronunciation")
+@Getter
+@Setter
+@Entity
+@Table(name = "user_pronunciation", schema = "public")
 public class User {
 
-//    @
-//    private String uid;
-//
-//    private String first_name;
-//
-//    private String last_name;
-//
-//    private String audio_file_path;
-//
-//    private Date last_modified_date;
+    @Id
+    @Column(name = "uid")
+    private String uid;
+
+    @Column(name = "first_name")
+    private String first_name;
+
+    @Column(name = "last_name")
+    private String last_name;
+
+    @Column(name = "audio_file_path")
+    private String audio_file_path;
+
+    @Column(name = "last_modified_date")
+    private Date last_modified_date;
 
 }

@@ -10,3 +10,5 @@ create table IF NOT EXISTS public.user_pronunciation (
     last_modified_date TIMESTAMP,
     CONSTRAINT pk_user_pronunciation PRIMARY KEY (uid asc)
 );
+
+-- insert into public.user_pronunciation (uid, first_name, last_name, audio_file_path, last_modified_date) values ('u816352', 'Shibankar', 'Ghosh', '/Users/shibankar/Documents/WF_Hackathon/audio_clips/u816352.wav', current_timestamp);

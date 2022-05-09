@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PronunciationRepo { //extends JpaRepository<User, String> {
-//    User searchUserById(String uid);
+public interface PronunciationRepo extends JpaRepository<User, String> {
+    User findByUid(String uid);
 }
