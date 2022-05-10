@@ -1,0 +1,23 @@
+.p-autocomplete {
+    width: 25%;
+    input {
+        width: 100%;
+        text-align: center;
+    }
+}
+.p-autocomplete-panel {
+    .employee-item {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        .employee-element{
+            margin: 0 1em 0 1em;
+        }
+        .employee-image {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+        }
+    }
+}
