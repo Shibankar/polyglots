@@ -19,14 +19,14 @@ public class PronunciationService {
         this.pronunciationRepo = pronunciationRepo;
     }
 
-    public String getPronunciation(String uid){
+    public String getPronunciation(String uid, String fname, String lname){
         String path;
         User user = pronunciationRepo.findByUid(uid);
         if(user != null){
             path = user.getAudio_file_path();
         } else {
             FttsClient fttsClient = new FttsClient();
-            path = fttsClient.generateAndSaveAudio(user.getUid(), user.getFirst_name(), user.getLast_name());
+            path = fttsClient.generateAndSaveAudio(uid, fname, lname);
         }
         return path;
     }

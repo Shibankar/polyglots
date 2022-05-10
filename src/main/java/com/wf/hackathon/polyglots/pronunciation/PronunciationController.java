@@ -27,8 +27,8 @@ public class PronunciationController {
 
 
     @GetMapping(produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, value = "/byId")
-    public ResponseEntity getUserById(@NotNull @RequestParam("uid") String uid) throws FileNotFoundException {
-        String filePath = pronunciationService.getPronunciation(uid);
+    public ResponseEntity getUserById(@NotNull @RequestParam("uid") String uid, @NotNull @RequestParam("fname") String fname, @NotNull @RequestParam("lname") String lname) throws FileNotFoundException {
+        String filePath = pronunciationService.getPronunciation(uid, fname, lname);
         System.out.println(filePath);
         long length = new File(filePath).length();
         InputStreamResource inputStreamResource = new InputStreamResource( new FileInputStream(filePath));
