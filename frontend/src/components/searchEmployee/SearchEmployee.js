@@ -20,7 +20,7 @@ export const SearchEmployee = ({showSelection, setSelection}) => {
          }
          else {
              _filteredEmployees = employees.filter((employee) =>
-                (employee.name !== null && employee.name.toLowerCase().indexOf(event.query.toLowerCase()) !== -1)
+                (employee.fullname !== null && employee.fullname.toLowerCase().indexOf(event.query.toLowerCase()) !== -1)
                 || (employee.uid !== null && employee.uid.toLowerCase().indexOf(event.query.toLowerCase()) !== -1));
          }
 
@@ -30,8 +30,8 @@ export const SearchEmployee = ({showSelection, setSelection}) => {
      const itemTemplate = (item) => {
          return (
              <div className="employee-item">
-                 <img alt={item.name} src={ProfileImage} className={"employee-element employee-image " + item.uid} />
-                 <div className="employee-element">{item.name}</div>
+                 <img alt={item.fullname} src={ProfileImage} className={"employee-element employee-image " + item.uid} />
+                 <div className="employee-element">{item.fullname}</div>
                  <div className="employee-element">{item.uid}</div>
              </div>
          );
@@ -42,7 +42,7 @@ export const SearchEmployee = ({showSelection, setSelection}) => {
              value={selectedEmployee}
              suggestions={filteredEmployees}
              completeMethod={searchEmployee}
-             field="name"
+             field="fullname"
              placeholder="Search pronunciation by Name or UID"
              forceSelection
              itemTemplate={itemTemplate}

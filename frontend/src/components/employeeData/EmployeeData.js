@@ -1,7 +1,7 @@
 import "./EmployeeData.scss";
 import ProfileImage from "../../employee-profile-default.svg";
 
-export const EmployeeData = ({data}) => {
+export const EmployeeData = ({data, pronunciation}) => {
     return (
         <div className="employee-data">
             <table>
@@ -21,7 +21,7 @@ export const EmployeeData = ({data}) => {
                         <td>
                             <img className="employee-image" src={ProfileImage} alt="profile" />
                         </td>
-                        <td>{data.name}</td>
+                        <td>{data.fullname}</td>
                         <td>{data.uid}</td>
                         <td>{data.lob}</td>
                         <td>{data.location}</td>

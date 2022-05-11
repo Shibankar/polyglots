@@ -1,50 +1,66 @@
 [
   {
-    "name": "Bhavleen Kaur",
+    "fullname": "Bhavleen Kaur",
+    "firstname": "Bhavleen",
+    "lastname": "Kaur",
     "uid": "U825726",
     "lob": "TI",
     "location": "India"
   },
   {
-    "name": "Ankit Bhowmick",
+    "fullname": "Ankit Bhowmick",
+    "firstname": "Ankit",
+    "lastname": "Bhowmick",
     "uid": "U851490",
     "lob": "TI",
     "location": "India"
   },
   {
-    "name": "Shibankar Ghosh",
+    "fullname": "Shibankar Ghosh",
+    "firstname": "Shibankar",
+    "lastname": "Ghosh",
     "uid": "U816352",
     "lob": "TI",
     "location": "India"
   },
   {
-    "name": "Santhosh Jayaraman",
+    "fullname": "Santhosh Jayaraman",
+    "firstname": "Santhosh",
+    "lastname": "Jayaraman",
     "uid": "U813376",
     "lob": "TI",
     "location": "India"
   },
   {
-    "name": "Gopal Kamaraj",
+    "fullname": "Gopalakrishnan Kamaraj",
+    "firstname": "Gopalakrishnan",
+    "lastname": "Kamaraj",
     "uid": "U845165",
     "lob": "TI",
     "location": "India"
   },
   {
-    "name": "Sarada Vempati",
+    "fullname": "Sarada Vempati",
+    "firstname": "Sarada",
+    "lastname": "Vempati",
     "uid": "U765453",
     "lob": "TI",
     "location": "India"
   },
   {
-    "name": "Alex Ouseph",
+    "fullname": "Alex Ouseph",
+    "firstname": "Alex",
+    "lastname": "Ouseph",
     "uid": "U797588",
     "lob": "TI",
     "location": "India"
   },
   {
-    "name": "Srinivas Nemani",
+    "fullname": "Srinivas Nemani",
+    "firstname": "Srinivas",
+    "lastname": "Nemani",
     "uid": "U825425",
-    "lob": "TI",
-    "location": "India"
+    "lob": "CTO",
+    "location": "US"
   }
 ]
