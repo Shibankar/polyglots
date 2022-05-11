@@ -17,17 +17,22 @@ export const EmployeeData = ({data, pronunciation}) => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <img className="employee-image" src={ProfileImage} alt="profile" />
-                        </td>
-                        <td>{data.fullname}</td>
-                        <td>{data.uid}</td>
-                        <td>{data.lob}</td>
-                        <td>{data.location}</td>
-                        <td><i className="pi pi-play" /></td>
-                        <td><i className="pi pi-plus-circle" /></td>
-                    </tr>
+                <tr>
+                    <td>
+                        <img className="employee-image" src={ProfileImage} alt="profile"/>
+                    </td>
+                    <td>{data.fullname}</td>
+                    <td>{data.uid}</td>
+                    <td>{data.lob}</td>
+                    <td>{data.location}</td>
+                    <td>
+                        <audio
+                            src={`/api/v1/pronunciation/byId?uid=${data.uid}&fname=${data.firstname}&lname=${data.lastname}`}
+                            controls
+                        />
+                    </td>
+                    <td><i className="pi pi-plus-circle"/></td>
+                </tr>
                 </tbody>
             </table>
         </div>
