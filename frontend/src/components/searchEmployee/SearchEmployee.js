@@ -2,6 +2,7 @@ import "./SearchEmployee.scss";
 import React, {useState, useEffect} from "react";
 import {AutoComplete} from "primereact/autocomplete";
 import ProfileImage from "../../employee-profile-default.svg";
+import EmployeeData from "../../employees.json";
 
 export const SearchEmployee = ({showSelection, setSelection}) => {
     const [employees, setEmployees] = useState([]);
@@ -9,13 +10,7 @@ export const SearchEmployee = ({showSelection, setSelection}) => {
     const [filteredEmployees, setFilteredEmployees] = useState(null);
 
      useEffect(() => {
-         setEmployees([
-             {name: "Bhavleen Kaur", uid: "u825726"},
-             {name: "Ankit Bhowmick", uid: "u851490"},
-             {name: "Shibankar Ghosh", uid: "u816352"},
-             {name: "Santhosh Jayaraman", uid: "u813376"},
-             {name: "Gopal Kamaraj", uid: "u845165"}
-         ]);
+         setEmployees(EmployeeData);
      }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
      const searchEmployee = (event) => {

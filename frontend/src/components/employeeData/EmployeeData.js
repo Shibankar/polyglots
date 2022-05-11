@@ -23,10 +23,10 @@ export const EmployeeData = ({data}) => {
                         </td>
                         <td>{data.name}</td>
                         <td>{data.uid}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td>{data.lob}</td>
+                        <td>{data.location}</td>
+                        <td><i className="pi pi-play" /></td>
+                        <td><i className="pi pi-plus-circle" /></td>
                     </tr>
                 </tbody>
             </table>
