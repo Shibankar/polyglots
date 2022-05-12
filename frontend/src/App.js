@@ -10,6 +10,9 @@ import UserIcon from "./images/user-icon.jpeg"
 import AlertsIcon from "./images/alert1.png"
 import SettingsIcon from "./images/settings.png"
 
+import PlayIcon from "./images/play.png"
+import RecordIcon from "./images/record.png"
+
 
 function App(data) {
     const [selectedEmployee, setSelectedEmployee] = useState(undefined);
@@ -91,7 +94,11 @@ function App(data) {
             </div>
             <div className="details-content">
                 <div className="content-1">
-                    <div className="name">Santhosh Jayaraman</div>
+                    <div className="name">
+                        <span>Santhosh Jayaraman</span>
+                        <img src={PlayIcon}></img>
+                        <img src={RecordIcon}></img>
+                    </div>
                     <div className="geography">Software Engineer Senior Manager | GENERAL MANAGEMENT</div>
                     <div className="follow"> Follow this person</div>
                     <h3 className="org">25 Directs, 25 Total Team | View Org Chart</h3>
@@ -187,13 +194,8 @@ function App(data) {
                 </div>
                 
             </div>
-
-
         </div>
-        <div>
-            <SearchEmployee showSelection={setShowEmployeeData} setSelection={setSelectedEmployee} />
-            {showEmployeeData && <EmployeeData data={selectedEmployee} />}
-        </div></>
+       </>
       );
 }
 
