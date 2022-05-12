@@ -9,6 +9,7 @@ export const EmployeeData = ({data, pronunciation}) => {
     const [isBlocked, setIsBlocked] = useState(false);
     const [isRecordingStp, setIsRecordingStp] = useState(false);
     const [blobURL, setBlobURL] = useState("");
+    const [blob, setBlob] = useState(undefined);
 
     useEffect(() => {
         navigator.getUserMedia = (
@@ -58,6 +59,7 @@ export const EmployeeData = ({data, pronunciation}) => {
             .stop()
             .getMp3()
             .then(([buffer, blob]) => {
+                setBlob(blob);
                 const blobURL = URL.createObjectURL(blob);
                 setBlobURL(blobURL);
                 setIsRecording(false);
@@ -72,6 +74,21 @@ export const EmployeeData = ({data, pronunciation}) => {
            */
        document.getElementsByTagName('audio')[1].src = '';
        setIsRecordingStp(false);
+    };
+
+    const save = () => {
+        if (blob !== undefined)
+        var postdata = new FormData();
+
+        // data.append('text', "this is the transcription of the audio file");
+        postdata.append('file', blob, data.uid + ".wav");
+
+        fetch("/api/v1/pronunciation/save?uid=" + data.uid, {
+            method: 'POST',
+            body: postdata
+        })
+            .then(response => console.log('API Response', response))
+            .catch(error => console.log("Error : ", error));
     };
 
     return (
@@ -109,6 +126,7 @@ export const EmployeeData = ({data, pronunciation}) => {
                                 <button className="btn btn-light" onClick={start} disabled={isRecording}>Record</button>
                                 <button className="btn btn-danger" onClick={stop} disabled={!isRecording}>Stop</button>
                                 <button className="btn btn-warning" onClick={reset} disabled={!isRecordingStp}>Reset</button>
+                                <button className="btn btn-light" onClick={save} disabled={!isRecordingStp}>Save</button>
                             </div>
                         </td>
                     </tr>
