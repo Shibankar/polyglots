@@ -12,6 +12,7 @@ import AlertsIcon from "./images/alert1.png"
 import SettingsIcon from "./images/settings.png"
 import PlayIcon from "./images/play.png"
 import RecordIcon from "./images/record.png"
+import SilentIcon from "./images/no-sound.png"
 
 
 function App(data) {
@@ -91,7 +92,7 @@ function App(data) {
             <div className="menu-item"><span>Documents (OneDrive) </span></div>
             <div className="menu-item"><span>Followed Sites</span></div>
         </div>
-        <div className="main-content">
+        {selectedEmployee && <div className="main-content">
             <div className="image-content">
                 <div className="user-image">
                     <img src={UserIcon}></img>
@@ -102,13 +103,14 @@ function App(data) {
             <div className="details-content">
                 <div className="content-1">
                     <div className="name">
-                        <span>Santhosh Jayaraman</span>
+                        <span>{selectedEmployee.fullname}</span>
                         <img src={PlayIcon}></img>
                         <img src={RecordIcon}></img>
+                        <img src={SilentIcon}></img>
                     </div>
-                    <div className="geography">Software Engineer Senior Manager | GENERAL MANAGEMENT</div>
+                    <div className="geography">{selectedEmployee.title}</div>
                     <div className="follow"> Follow this person</div>
-                    <h3 className="org">25 Directs, 25 Total Team | View Org Chart</h3>
+                    {selectedEmployee.reportees && <h3 className="org">{selectedEmployee.reportees} | View Org Chart</h3>}
                     <div className="action"></div>
                     <div className="mention">
                         Feel free to <span>mention</span> me in a post
@@ -121,56 +123,58 @@ function App(data) {
                 </div>
                 <div className="content-3">
                     <table>
+                        <tbody>
                         <tr>
                             <td className="legend">Legal Name:</td>
-                            <td className="value">Santhosh Jayaraman</td>
+                            <td className="value">{selectedEmployee.fullname}</td>
                         </tr>
                         <tr className="mgrbtm5">
                             <td colSpan={2}>&nbsp;</td>
                         </tr>
                         <tr>
                             <td className="legend">Work Phone:</td>
-                            <td className="value">+91 98808 87085</td>
+                            <td className="value">{selectedEmployee.wphone}</td>
                         </tr>
                         <tr>
                             <td className="legend">Mobile:</td>
-                            <td className="value">+91 98808 87085</td>
+                            <td className="value">{selectedEmployee.mobile}</td>
                         </tr>
                         <tr className="mgrbtm5">
                             <td colSpan={2}>&nbsp;</td>
                         </tr>
                         <tr>
                             <td className="legend">Email:</td>
-                            <td className="value">santhosh.jayaraman@wellsfargo.com</td>
+                            <td className="value">{selectedEmployee.email}</td>
                         </tr>
                         <tr className="mgrbtm5">
                             <td colSpan={2}>&nbsp;</td>
                         </tr>
                         <tr>
                             <td className="legend">MAC:</td>
-                            <td className="value">O2830-010</td>
+                            <td className="value">{selectedEmployee.mac}</td>
                         </tr>
                         <tr className="mgrbtm5">
                             <td colSpan={2}>&nbsp;</td>
                         </tr>
                         <tr>
                             <td className="legend">Address:</td>
-                            <td className="value">4001 Woodcreek Oaks Blvd</td>
+                            <td className="value">{selectedEmployee.address}</td>
                         </tr>
                         <tr className="mgrbtm5">
                             <td colSpan={2}>&nbsp;</td>
                         </tr>
                         <tr>
                             <td className="legend">Ent Logon ID:</td>
-                            <td className="value">U813376</td>
+                            <td className="value">{selectedEmployee.uid}</td>
                         </tr>
                         <tr>
                             <td className="legend">Cost centre:</td>
-                            <td className="value">0229878</td>
+                            <td className="value">{selectedEmployee.costcentre}</td>
                         </tr>
                         <tr className="mgrbtm5">
                             <td colSpan={2}>&nbsp;</td>
                         </tr>
+                        </tbody>
                     </table>
                 </div>
                 <div className="content-4">
@@ -201,7 +205,7 @@ function App(data) {
                 </div>
                 
             </div>
-        </div>
+        </div>}
        </>
       );
 }
