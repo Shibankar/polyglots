@@ -12,6 +12,8 @@ import AlertsIcon from "./images/alert1.png";
 import SettingsIcon from "./images/settings.png";
 import PlayIcon from "./images/play.png";
 import RecordIcon from "./images/record.png";
+import SilentIcon from "./images/no-sound.png"
+import Santhosh from "./images/avatars/Santhosh.jpeg";
 import {CustomModal} from "./components/customModal/CustomModal";
 import {PlayPronunciation} from "./components/playPronunciation/PlayPronunciation";
 import {OverridePronunciation} from "./components/overridePronunciation/OverridePronunciation";
@@ -30,11 +32,15 @@ function App(data) {
         }
     }, [selectedEmployee]);
 
+    const getImage = (image) => {
+        return <img src={require(`./images/avatars/${image}.jpeg`)} />
+     }
+
     return (
         <>
         <div className="user-header">
             <div className="user-img">
-                <img src={UserIcon}/>
+                <img src={Santhosh}/>
             </div>
             <div className="user-name">
                 <div className="name">
@@ -95,10 +101,10 @@ function App(data) {
             <div className="menu-item"><span>Documents (OneDrive) </span></div>
             <div className="menu-item"><span>Followed Sites</span></div>
         </div>
-        <div className="main-content">
+        {selectedEmployee && <div className="main-content">
             <div className="image-content">
                 <div className="user-image">
-                    <img src={UserIcon}></img>
+                    {getImage(selectedEmployee.firstname)}
                 </div>
                 <div className="user-link">Profile</div>
                 <div className="user-link">People</div>
@@ -106,9 +112,10 @@ function App(data) {
             <div className="details-content">
                 <div className="content-1">
                     <div className="name">
-                        <span>Santhosh Jayaraman</span>
+                        <span>{selectedEmployee.fullname}</span>
                         <img src={PlayIcon} onClick={() => setShowPlayModal(true)} />
                         <img src={RecordIcon} onClick={() => setShowOverrideModal(true)} />
+                        <img src={SilentIcon} />
                     </div>
                     <div className="geography">Software Engineer Senior Manager | GENERAL MANAGEMENT</div>
                     <div className="follow"> Follow this person</div>
@@ -125,6 +132,7 @@ function App(data) {
                 </div>
                 <div className="content-3">
                     <table>
+                        <tbody>
                         <tr>
                             <td className="legend">Legal Name:</td>
                             <td className="value">Santhosh Jayaraman</td>
@@ -175,6 +183,7 @@ function App(data) {
                         <tr className="mgrbtm5">
                             <td colSpan={2}>&nbsp;</td>
                         </tr>
+                        </tbody>
                     </table>
                 </div>
                 <div className="content-4">
@@ -205,7 +214,7 @@ function App(data) {
                 </div>
                 
             </div>
-        </div>
+        </div>}
         <CustomModal
             showModal={showPlayModal}
             setShowModal={setShowPlayModal}

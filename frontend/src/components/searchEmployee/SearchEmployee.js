@@ -27,11 +27,15 @@ export const SearchEmployee = ({showSelection, setSelection}) => {
          setFilteredEmployees(_filteredEmployees);
      }
 
+     const getImage = (image) => {
+        return <img src={require(`../../images/avatars/${image}.jpeg`)} />
+     }
+
      const itemTemplate = (item) => {
          return (
              <div className="employee">
                 <div className="employee-image">
-                    <img alt={item.fullname} src={ProfileImage} className={"employee-element employee-image " + item.uid} />
+                    {getImage(item.firstname)}
                 </div>
                 <div className="employee-details">
                     <div className="employee-name">{item.fullname}</div>
