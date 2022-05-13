@@ -206,8 +206,19 @@ function App(data) {
                 
             </div>
         </div>
-        <CustomModal showModal={showPlayModal} setShowModal={setShowPlayModal} title="Play Pronunciation" body={<PlayPronunciation />} />
-        <CustomModal showModal={showOverrideModal} setShowModal={setShowOverrideModal} title="Add Custom Pronunciation" body={<OverridePronunciation />} showFooter />
+        <CustomModal
+            showModal={showPlayModal}
+            setShowModal={setShowPlayModal}
+            title="Play Pronunciation"
+            body={<PlayPronunciation />} />
+        <CustomModal
+            showModal={showOverrideModal}
+            setShowModal={setShowOverrideModal}
+            title="Add Custom Pronunciation"
+            body={<OverridePronunciation
+            data={selectedEmployee} />}
+            showFooter
+            largeSize />
        </>
       );
 }
