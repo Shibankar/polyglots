@@ -27,7 +27,7 @@ public class FttsClient {
                             + voiceName + ".  Please specify a different voice.");
         }
 
-        audioPlayer = new SingleFileAudioPlayer(basePath + uid, Type.WAVE);
+        audioPlayer = new SingleFileAudioPlayer(basePath + uid.toLowerCase().trim(), Type.WAVE);
         helloVoice.setAudioPlayer(audioPlayer);
         helloVoice.allocate();
         helloVoice.speak(fname + " " + lname);

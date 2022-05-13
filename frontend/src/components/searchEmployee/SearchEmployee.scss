@@ -1,23 +1,50 @@
 .p-autocomplete {
-    width: 25%;
     input {
-        width: 100%;
-        text-align: center;
+        border-radius: 2px;
+        padding:0 0 0 3px;
+        border: 1px solid grey;
+        font-size: 12px;
+        width: 250px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
     }
 }
+.p-autocomplete-panel .p-autocomplete-items{
+    padding: 0;
+    border-bottom: 1px dotted;
+}
+.p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item{
+    border-bottom: 1px dotted;   
+}
+
 .p-autocomplete-panel {
-    .employee-item {
+    padding: 0;
+    border-radius: 2px;
+    .employee {
         display: flex;
         flex-direction: row;
-        align-items: center;
-        .employee-element{
-            margin: 0 1em 0 1em;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-size: 11px;
+        .employee-details{
+            display: flex;
+            flex-direction: column;
+            .employee-name{
+                flex: 0.5;
+                margin: 0 9px 0 9px;
+                color: #3366cc;
+                font-weight: bold;
+            }
+            .employee-detail{
+                flex: 0.5;
+                margin: 0 9px 0 9px;
+            }
         }
-        .employee-image {
-            height: 40px;
-            width: 40px;
-            border-radius: 50%;
-            border: 2px solid #fff;
+        .employee-image{
+            img {
+                height: 40px;
+                width: 40px;
+                border-radius: 50%;
+                border: 2px solid #fff;
+            }
         }
     }
 }

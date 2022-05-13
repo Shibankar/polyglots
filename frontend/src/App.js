@@ -2,14 +2,14 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";  //theme
 import "primereact/resources/primereact.min.css";                  //core css
 import "primeicons/primeicons.css";                                //icons
 import "./App.scss";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {SearchEmployee} from "./components/searchEmployee/SearchEmployee";
 import {EmployeeData} from "./components/employeeData/EmployeeData";
+import {getPronunciation} from "./api/PronunciationApi";
 import AppLogo from "./images/wf_logo_48px.png"
 import UserIcon from "./images/user-icon.jpeg"
 import AlertsIcon from "./images/alert1.png"
 import SettingsIcon from "./images/settings.png"
-
 import PlayIcon from "./images/play.png"
 import RecordIcon from "./images/record.png"
 
@@ -18,6 +18,13 @@ function App(data) {
     const [selectedEmployee, setSelectedEmployee] = useState(undefined);
     const [showEmployeeData, setShowEmployeeData] = useState(false);
     const [currentUser, setCurrentUser] = useState(data);
+    const [pronunciation, setPronunciation] = useState(undefined);
+
+    useEffect(() => {
+        if (selectedEmployee !== undefined && selectedEmployee.uid !== null && selectedEmployee.firstname !== null && selectedEmployee.lastname !== null) {
+            setPronunciation(getPronunciation(selectedEmployee.uid, selectedEmployee.firstname, selectedEmployee.lastname));
+        }
+    }, [selectedEmployee]);
 
     return (
         <>
@@ -63,7 +70,7 @@ function App(data) {
                         </select>
                     </div>
                     <div>
-                        <input placeholder="Search by name or profile info"></input>
+                        <SearchEmployee showSelection={setShowEmployeeData} setSelection={setSelectedEmployee} />
                     </div>
                 </div>
                 <div className="search-panel-2">

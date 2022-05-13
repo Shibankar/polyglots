@@ -2,6 +2,7 @@ import "./SearchEmployee.scss";
 import React, {useState, useEffect} from "react";
 import {AutoComplete} from "primereact/autocomplete";
 import ProfileImage from "../../employee-profile-default.svg";
+import EmployeeData from "../../employees.json";
 
 export const SearchEmployee = ({showSelection, setSelection}) => {
     const [employees, setEmployees] = useState([]);
@@ -9,13 +10,7 @@ export const SearchEmployee = ({showSelection, setSelection}) => {
     const [filteredEmployees, setFilteredEmployees] = useState(null);
 
      useEffect(() => {
-         setEmployees([
-             {name: "Bhavleen Kaur", uid: "u825726"},
-             {name: "Ankit Bhowmick", uid: "u851490"},
-             {name: "Shibankar Ghosh", uid: "u816352"},
-             {name: "Santhosh Jayaraman", uid: "u813376"},
-             {name: "Gopal Kamaraj", uid: "u845165"}
-         ]);
+         setEmployees(EmployeeData);
      }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
      const searchEmployee = (event) => {
@@ -25,7 +20,7 @@ export const SearchEmployee = ({showSelection, setSelection}) => {
          }
          else {
              _filteredEmployees = employees.filter((employee) =>
-                (employee.name !== null && employee.name.toLowerCase().indexOf(event.query.toLowerCase()) !== -1)
+                (employee.fullname !== null && employee.fullname.toLowerCase().indexOf(event.query.toLowerCase()) !== -1)
                 || (employee.uid !== null && employee.uid.toLowerCase().indexOf(event.query.toLowerCase()) !== -1));
          }
 
@@ -34,10 +29,14 @@ export const SearchEmployee = ({showSelection, setSelection}) => {
 
      const itemTemplate = (item) => {
          return (
-             <div className="employee-item">
-                 <img alt={item.name} src={ProfileImage} className={"employee-element employee-image " + item.uid} />
-                 <div className="employee-element">{item.name}</div>
-                 <div className="employee-element">{item.uid}</div>
+             <div className="employee">
+                <div className="employee-image">
+                    <img alt={item.fullname} src={ProfileImage} className={"employee-element employee-image " + item.uid} />
+                </div>
+                <div className="employee-details">
+                    <div className="employee-name">{item.fullname}</div>
+                    <div className="employee-detail">{item.uid}</div>
+                </div>
              </div>
          );
      }
@@ -47,8 +46,8 @@ export const SearchEmployee = ({showSelection, setSelection}) => {
              value={selectedEmployee}
              suggestions={filteredEmployees}
              completeMethod={searchEmployee}
-             field="name"
-             placeholder="Search pronunciation by Name or UID"
+             field="fullname"
+             placeholder="Search by name or profile info"
              forceSelection
              itemTemplate={itemTemplate}
              onChange={(e) => setSelectedEmployee(e.value)}
