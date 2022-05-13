@@ -1,0 +1,17 @@
+.override-pronunciation-modal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    .elements {
+        padding: 1em;
+    }
+    .select-section, .record-section {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        button {
+            margin: 0.5em;
+        }
+    }
+}
