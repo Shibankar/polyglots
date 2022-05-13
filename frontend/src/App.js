@@ -6,19 +6,23 @@ import {useState, useEffect} from "react";
 import {SearchEmployee} from "./components/searchEmployee/SearchEmployee";
 import {EmployeeData} from "./components/employeeData/EmployeeData";
 import {getPronunciation} from "./api/PronunciationApi";
-import AppLogo from "./images/wf_logo_48px.png"
-import UserIcon from "./images/user-icon.jpeg"
-import AlertsIcon from "./images/alert1.png"
-import SettingsIcon from "./images/settings.png"
-import PlayIcon from "./images/play.png"
-import RecordIcon from "./images/record.png"
-
+import AppLogo from "./images/wf_logo_48px.png";
+import UserIcon from "./images/user-icon.jpeg";
+import AlertsIcon from "./images/alert1.png";
+import SettingsIcon from "./images/settings.png";
+import PlayIcon from "./images/play.png";
+import RecordIcon from "./images/record.png";
+import {CustomModal} from "./components/customModal/CustomModal";
+import {PlayPronunciation} from "./components/playPronunciation/PlayPronunciation";
+import {OverridePronunciation} from "./components/overridePronunciation/OverridePronunciation";
 
 function App(data) {
     const [selectedEmployee, setSelectedEmployee] = useState(undefined);
     const [showEmployeeData, setShowEmployeeData] = useState(false);
     const [currentUser, setCurrentUser] = useState(data);
     const [pronunciation, setPronunciation] = useState(undefined);
+    const [showPlayModal, setShowPlayModal] = useState(false);
+    const [showOverrideModal, setShowOverrideModal] = useState(false);
 
     useEffect(() => {
         if (selectedEmployee !== undefined && selectedEmployee.uid !== null && selectedEmployee.firstname !== null && selectedEmployee.lastname !== null) {
@@ -103,8 +107,8 @@ function App(data) {
                 <div className="content-1">
                     <div className="name">
                         <span>Santhosh Jayaraman</span>
-                        <img src={PlayIcon}></img>
-                        <img src={RecordIcon}></img>
+                        <img src={PlayIcon} onClick={() => setShowPlayModal(true)} />
+                        <img src={RecordIcon} onClick={() => setShowOverrideModal(true)} />
                     </div>
                     <div className="geography">Software Engineer Senior Manager | GENERAL MANAGEMENT</div>
                     <div className="follow"> Follow this person</div>
@@ -202,6 +206,8 @@ function App(data) {
                 
             </div>
         </div>
+        <CustomModal showModal={showPlayModal} setShowModal={setShowPlayModal} title="Play Pronunciation" body={<PlayPronunciation />} />
+        <CustomModal showModal={showOverrideModal} setShowModal={setShowOverrideModal} title="Add Custom Pronunciation" body={<OverridePronunciation />} />
        </>
       );
 }
