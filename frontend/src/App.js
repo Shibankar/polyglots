@@ -207,7 +207,7 @@ function App(data) {
             </div>
         </div>
         <CustomModal showModal={showPlayModal} setShowModal={setShowPlayModal} title="Play Pronunciation" body={<PlayPronunciation />} />
-        <CustomModal showModal={showOverrideModal} setShowModal={setShowOverrideModal} title="Add Custom Pronunciation" body={<OverridePronunciation />} />
+        <CustomModal showModal={showOverrideModal} setShowModal={setShowOverrideModal} title="Add Custom Pronunciation" body={<OverridePronunciation />} showFooter />
        </>
       );
 }

@@ -1,5 +1,5 @@
 export const OverridePronunciation = () => {
     return (
-        <div>hello</div>
+        <div>hello peeps</div>
     );
 };
