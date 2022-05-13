@@ -13,6 +13,7 @@ import SettingsIcon from "./images/settings.png"
 import PlayIcon from "./images/play.png"
 import RecordIcon from "./images/record.png"
 import SilentIcon from "./images/no-sound.png"
+import Santhosh from "./images/avatars/Santhosh.jpeg";
 
 
 function App(data) {
@@ -27,11 +28,15 @@ function App(data) {
         }
     }, [selectedEmployee]);
 
+    const getImage = (image) => {
+        return <img src={require(`./images/avatars/${image}.jpeg`)} />
+     }
+
     return (
         <>
         <div className="user-header">
             <div className="user-img">
-                <img src={UserIcon}/>
+                <img src={Santhosh}/>
             </div>
             <div className="user-name">
                 <div className="name">
@@ -95,7 +100,7 @@ function App(data) {
         {selectedEmployee && <div className="main-content">
             <div className="image-content">
                 <div className="user-image">
-                    <img src={UserIcon}></img>
+                    {getImage(selectedEmployee.firstname)}
                 </div>
                 <div className="user-link">Profile</div>
                 <div className="user-link">People</div>
