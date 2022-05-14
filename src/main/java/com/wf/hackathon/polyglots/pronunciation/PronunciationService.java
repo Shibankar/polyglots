@@ -73,7 +73,7 @@ public class PronunciationService {
         MsCognitiveServiceClient msCognitiveServiceClient = new MsCognitiveServiceClient();
         System.out.println(voice.getVoice_name());
         path = msCognitiveServiceClient.generateSpeechAndSave(uid, fname + " " + lname, voice.getVoice_name(), basePath);
-        User user = new User(uid, fname, lname, voice.getCountry(), path, new Date(), voice.getVoice_name(), voice.getGender(), false);
+        User user = new User(uid, fname, lname, voice.getCountry(), path + uid + ".wav", new Date(), voice.getVoice_name(), voice.getGender(), false);
         pronunciationRepo.save(user);
 
         return path;
