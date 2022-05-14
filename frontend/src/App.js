@@ -219,7 +219,10 @@ function App(data) {
             showModal={showPlayModal}
             setShowModal={setShowPlayModal}
             title="Play Pronunciation"
-            body={<PlayPronunciation />} />
+            body={<PlayPronunciation
+                data={selectedEmployee}
+            />}
+        />
         <CustomModal
             showModal={showOverrideModal}
             setShowModal={setShowOverrideModal}

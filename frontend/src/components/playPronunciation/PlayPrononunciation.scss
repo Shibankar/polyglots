@@ -1,0 +1,14 @@
+.play-pronunciation-modal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  .elements {
+    padding: 1em;
+  }
+  .play-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
