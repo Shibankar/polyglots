@@ -1,5 +1,6 @@
 import "./OverridePronunciation.scss";
 import {useState, useEffect} from "react";
+import {getAllVoices, getUserById, savePronunciation} from "../../api/PronunciationApi";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import {SelectButton} from "primereact/selectbutton";
@@ -7,12 +8,16 @@ import {Dropdown} from "primereact/dropdown";
 import MicRecorder from "mic-recorder-to-mp3";
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
-export const OverridePronunciation = ({data}) => {
+export const OverridePronunciation = ({employeeData}) => {
     const options = ["Option 1", "Option 2"];
     const [selectedOption, setSelectedOption] = useState(options[0]);
+    const [userVoiceData, setUserVoiceData] = useState(undefined);
 
+    const [allVoices, setAllVoices] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState(undefined);
     const [countries, setCountries] = useState([]);
+    const [selectedVoiceName, setSelectedVoiceName] = useState(undefined);
+    const [voiceNames, setVoiceNames] = useState([]);
 
     const [isRecording, setIsRecording] = useState(false);
     const [isBlocked, setIsBlocked] = useState(false);
@@ -27,8 +32,6 @@ export const OverridePronunciation = ({data}) => {
             navigator.mozGetUserMedia ||
             navigator.msGetUserMedia
         );
-
-        //Detects the action on user click to allow or deny permission of audio device
         navigator.getUserMedia(
             { audio: true },
             () => {
@@ -39,35 +42,51 @@ export const OverridePronunciation = ({data}) => {
                 console.log('Permission Denied');
                 setIsBlocked(true);
         });
-    });
 
-    useEffect(() => {
-        setCountries([""]);
+        getAllVoices()
+                    .then(data => setAllVoices(data))
+                    .catch((e) => console.error(e));
     }, []);
 
+    useEffect(() => {
+        if (employeeData.uid) {
+            getUserById(employeeData.uid)
+                .then(data => setUserVoiceData(data))
+                .catch((e) => console.error(e));
+        }
+    }, [employeeData]);
+
+    useEffect(() => {
+        if (allVoices.length !== 0) {
+            setCountries([...new Set(allVoices.map(v => v.country))]);
+        }
+    }, [allVoices]);
+
+    useEffect(() => {
+        if (userVoiceData && userVoiceData.country && userVoiceData.voice_name) {
+            setSelectedCountry(userVoiceData.country);
+            setSelectedVoiceName(userVoiceData.voice_name);
+        }
+    }, [userVoiceData]);
+
+    useEffect(() => {
+        if (selectedCountry && allVoices.length !== 0) {
+            setVoiceNames([...new Set(allVoices.filter(v => v.country === selectedCountry).map(v => v.voice_name))]);
+        }
+    }, [selectedCountry]);
+
     const start = () => {
-        /*
-        * If the user denys permission to use the audio device
-        * in the browser no recording can be done and an alert is shown
-        * If the user allows permission the recoding will begin
-        */
         if (isBlocked) {
             alert('Permission Denied');
         } else {
         Mp3Recorder
             .start()
-            .then(() => {
-                setIsRecording(true);
-            }).catch((e) => console.error(e));
+            .then(() => setIsRecording(true))
+            .catch((e) => console.error(e));
         }
     };
 
     const stop = () => {
-        /*
-        * Once the recoding starts the stop button is activated
-        * Click stop once recording as finished
-        * An MP3 is generated for the user to download the audio
-        */
         Mp3Recorder
             .stop()
             .getMp3()
@@ -81,27 +100,27 @@ export const OverridePronunciation = ({data}) => {
     };
 
     const reset = () => {
-        /*
-        * The user can reset the audio recording
-        * once the stop button is clicked
-        */
         document.getElementsByTagName('audio')[1].src = '';
         setIsRecordingStp(false);
     };
 
     const save = () => {
-        if (blob !== undefined)
-        var postdata = new FormData();
+        let postdata = new FormData();
+        postdata.append('file', blob, employeeData.uid + ".wav");
 
-        // data.append('text', "this is the transcription of the audio file");
-        postdata.append('file', blob, data.uid + ".wav");
-
-        fetch("/api/v1/pronunciation/save?uid=" + data.uid, {
-            method: 'POST',
-            body: postdata
-        })
-        .then(response => console.log('API Response', response))
-        .catch(error => console.log("Error : ", error));
+        savePronunciation(
+            employeeData.uid,
+            employeeData.firstname,
+            employeeData.lastname,
+            selectedOption === options[0] ? selectedCountry : employeeData.location,
+            selectedOption === options[0] ? selectedVoiceName : "Custom",
+            selectedOption === options[0] ?
+                allVoices.filter(v => v.country === selectedCountry && v.voice_name === selectedVoiceName).gender
+                : "",
+            false,
+            postdata)
+            .then(data => console.log('API Response', data))
+            .catch(error => console.log("Error : ", error));
     };
 
     return (
@@ -110,8 +129,15 @@ export const OverridePronunciation = ({data}) => {
             <div className="override-pronunciation-modal">
                 {selectedOption && selectedOption === options[0] && <div className="select-section">
                     <div className="elements">Change Country/Voice</div>
-                    <Dropdown value={selectedCountry} options={countries} onChange={(e) => setSelectedCountry(e.value)} optionLabel="country" placeholder="Select a Country" />
-                    <audio src={`/api/v1/pronunciation/byId?uid=${data.uid}&fname=${data.firstname}&lname=${data.lastname}`} controls />
+                    <div className="elements">
+                        <Dropdown value={selectedCountry} options={countries} onChange={(e) => setSelectedCountry(e.value)} placeholder="Select a Country" />
+                    </div>
+                    <div className="elements">
+                        <Dropdown value={selectedVoiceName} options={voiceNames} onChange={(e) => setSelectedVoiceName(e.value)} placeholder="Select a Voice" disabled={selectedCountry === undefined} />
+                    </div>
+                    {selectedCountry && selectedVoiceName
+                        ? <audio src={`/api/v1/pronunciation/byId?uid=${employeeData.uid}&fname=${employeeData.firstname}&lname=${employeeData.lastname}&country=${selectedCountry}&voicename=${selectedVoiceName}`} controls />
+                        : <audio src={`/api/v1/pronunciation/byId?uid=${employeeData.uid}&fname=${employeeData.firstname}&lname=${employeeData.lastname}&country=${employeeData.location}`} controls />}
                 </div>}
                 {selectedOption && selectedOption === options[1] && <div className="record-section">
                     <div className="elements">Record Custom Audio</div>

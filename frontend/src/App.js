@@ -205,13 +205,13 @@ function App(data) {
             showModal={showPlayModal}
             setShowModal={setShowPlayModal}
             title="Play Pronunciation"
-            body={<PlayPronunciation data={selectedEmployee} />}
+            body={<PlayPronunciation employeeData={selectedEmployee} />}
         />
         <CustomModal
             showModal={showOverrideModal}
             setShowModal={setShowOverrideModal}
             title="Add Custom Pronunciation"
-            body={<OverridePronunciation data={selectedEmployee} />}
+            body={<OverridePronunciation employeeData={selectedEmployee} />}
         />
        </>
       );
