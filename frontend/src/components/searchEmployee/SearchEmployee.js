@@ -1,10 +1,9 @@
 import "./SearchEmployee.scss";
 import React, {useState, useEffect} from "react";
 import {AutoComplete} from "primereact/autocomplete";
-import ProfileImage from "../../employee-profile-default.svg";
 import EmployeeData from "../../employees.json";
 
-export const SearchEmployee = ({showSelection, setSelection}) => {
+export const SearchEmployee = ({setSelection}) => {
     const [employees, setEmployees] = useState([]);
     const [selectedEmployee, setSelectedEmployee] = useState(null);
     const [filteredEmployees, setFilteredEmployees] = useState(null);
@@ -28,7 +27,7 @@ export const SearchEmployee = ({showSelection, setSelection}) => {
      }
 
      const getImage = (image) => {
-        return <img src={require(`../../images/avatars/${image}.jpeg`)} />
+        return <img src={require(`../../images/avatars/${image}.jpeg`)} alt="profile" />
      }
 
      const itemTemplate = (item) => {
@@ -56,10 +55,7 @@ export const SearchEmployee = ({showSelection, setSelection}) => {
              itemTemplate={itemTemplate}
              onChange={(e) => setSelectedEmployee(e.value)}
              aria-label="Employees"
-             onSelect={(e) => {
-                 setSelection(e.value);
-                 showSelection(true);
-             }}
+             onSelect={(e) => setSelection(e.value)}
           />
      );
 };

@@ -2,12 +2,9 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";  //theme
 import "primereact/resources/primereact.min.css";                  //core css
 import "primeicons/primeicons.css";                                //icons
 import "./App.scss";
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import {SearchEmployee} from "./components/searchEmployee/SearchEmployee";
-import {EmployeeData} from "./components/employeeData/EmployeeData";
-import {getPronunciation} from "./api/PronunciationApi";
 import AppLogo from "./images/wf_logo_48px.png";
-import UserIcon from "./images/user-icon.jpeg";
 import AlertsIcon from "./images/alert1.png";
 import SettingsIcon from "./images/settings.png";
 import PlayIcon from "./images/play.png";
@@ -20,27 +17,18 @@ import {OverridePronunciation} from "./components/overridePronunciation/Override
 
 function App(data) {
     const [selectedEmployee, setSelectedEmployee] = useState(undefined);
-    const [showEmployeeData, setShowEmployeeData] = useState(false);
-    const [currentUser, setCurrentUser] = useState(data);
-    const [pronunciation, setPronunciation] = useState(undefined);
     const [showPlayModal, setShowPlayModal] = useState(false);
     const [showOverrideModal, setShowOverrideModal] = useState(false);
 
-    useEffect(() => {
-        if (selectedEmployee !== undefined && selectedEmployee.uid !== null && selectedEmployee.firstname !== null && selectedEmployee.lastname !== null) {
-            setPronunciation(getPronunciation(selectedEmployee.uid, selectedEmployee.firstname, selectedEmployee.lastname));
-        }
-    }, [selectedEmployee]);
-
     const getImage = (image) => {
-        return <img src={require(`./images/avatars/${image}.jpeg`)} />
+        return <img src={require(`./images/avatars/${image}.jpeg`)}  alt="profile" />
      }
 
     return (
         <>
         <div className="user-header">
             <div className="user-img">
-                <img src={Santhosh}/>
+                <img src={Santhosh} alt="santhosh-profile" />
             </div>
             <div className="user-name">
                 <div className="name">
@@ -54,10 +42,10 @@ function App(data) {
                 <span>Sites A-Z</span>
             </div>
             <div className="user-bell">
-                <img src={AlertsIcon}/>
+                <img src={AlertsIcon} alt="alert-icon" />
             </div>
             <div className="user-settings">
-                <img src={SettingsIcon}/>
+                <img src={SettingsIcon} alt="settings-icon" />
             </div>
         </div>
         <div className="app-header">
@@ -80,7 +68,7 @@ function App(data) {
                         </select>
                     </div>
                     <div>
-                        <SearchEmployee showSelection={setShowEmployeeData} setSelection={setSelectedEmployee} />
+                        <SearchEmployee setSelection={setSelectedEmployee} />
                     </div>
                 </div>
                 <div className="search-panel-2">
@@ -113,9 +101,9 @@ function App(data) {
                 <div className="content-1">
                     <div className="name">
                         <span>{selectedEmployee.fullname}</span>
-                        <img src={PlayIcon} onClick={() => setShowPlayModal(true)} />
-                        <img src={RecordIcon} onClick={() => setShowOverrideModal(true)} />
-                        <img src={SilentIcon} />
+                        <img src={PlayIcon} onClick={() => setShowPlayModal(true)} alt="play-icon" />
+                        <img src={RecordIcon} onClick={() => setShowOverrideModal(true)} alt="record-icon" />
+                        <img src={SilentIcon} alt="silent-icon" />
                     </div>
                     <div className="geography">Software Engineer Senior Manager | GENERAL MANAGEMENT</div>
                     <div className="follow"> Follow this person</div>
@@ -200,7 +188,6 @@ function App(data) {
                     </div>
                     <div className="content">
                        <span>Manager you share</span>
-                       <img></img>
                     </div>
                 </div>
                 <div className="org-outline">
@@ -209,7 +196,6 @@ function App(data) {
                 </div>
                 <div className="content">
                        <span>Org Image</span>
-                       <img></img>
                 </div>
                 </div>
                 

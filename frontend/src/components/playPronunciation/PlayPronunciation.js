@@ -1,4 +1,3 @@
-import Button from "react-bootstrap/Button";
 import "./PlayPrononunciation.scss";
 
 export const PlayPronunciation = ({data}) => {
