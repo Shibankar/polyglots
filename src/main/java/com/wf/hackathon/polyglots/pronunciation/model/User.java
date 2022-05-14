@@ -28,4 +28,13 @@ public class User {
     @Column(name = "last_modified_date")
     private Date last_modified_date;
 
+    @Column(name = "voice_name")
+    private String voice_name;
+
+    @Column(name = "voice_gender")
+    private String voice_gender;
+
+    @Column(name = "service_opt_out")
+    private boolean service_opt_out;
+
 }

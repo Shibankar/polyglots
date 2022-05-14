@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PronunciationRepo extends JpaRepository<User, String> {
     User findByUid(String uid);
+    User save(User user);
 }
