@@ -105,9 +105,9 @@ function App(data) {
                         <img src={RecordIcon} onClick={() => setShowOverrideModal(true)} alt="record-icon" />
                         <img src={SilentIcon} alt="silent-icon" />
                     </div>
-                    <div className="geography">Software Engineer Senior Manager | GENERAL MANAGEMENT</div>
+                    <div className="geography">{selectedEmployee.title}</div>
                     <div className="follow"> Follow this person</div>
-                    <h3 className="org">25 Directs, 25 Total Team | View Org Chart</h3>
+                    {selectedEmployee.reportees && <h3 className="org">{selectedEmployee.reportees} | View Org Chart</h3>}
                     <div className="action"></div>
                     <div className="mention">
                         Feel free to <span>mention</span> me in a post
@@ -123,50 +123,50 @@ function App(data) {
                         <tbody>
                         <tr>
                             <td className="legend">Legal Name:</td>
-                            <td className="value">Santhosh Jayaraman</td>
+                            <td className="value">{selectedEmployee.fullname}</td>
                         </tr>
                         <tr className="mgrbtm5">
                             <td colSpan={2}>&nbsp;</td>
                         </tr>
                         <tr>
                             <td className="legend">Work Phone:</td>
-                            <td className="value">+91 98808 87085</td>
+                            <td className="value">{selectedEmployee.wphone}</td>
                         </tr>
                         <tr>
                             <td className="legend">Mobile:</td>
-                            <td className="value">+91 98808 87085</td>
+                            <td className="value">{selectedEmployee.mobile}</td>
                         </tr>
                         <tr className="mgrbtm5">
                             <td colSpan={2}>&nbsp;</td>
                         </tr>
                         <tr>
                             <td className="legend">Email:</td>
-                            <td className="value">santhosh.jayaraman@wellsfargo.com</td>
+                            <td className="value">{selectedEmployee.email}</td>
                         </tr>
                         <tr className="mgrbtm5">
                             <td colSpan={2}>&nbsp;</td>
                         </tr>
                         <tr>
                             <td className="legend">MAC:</td>
-                            <td className="value">O2830-010</td>
+                            <td className="value">{selectedEmployee.mac}</td>
                         </tr>
                         <tr className="mgrbtm5">
                             <td colSpan={2}>&nbsp;</td>
                         </tr>
                         <tr>
                             <td className="legend">Address:</td>
-                            <td className="value">4001 Woodcreek Oaks Blvd</td>
+                            <td className="value">{selectedEmployee.address}</td>
                         </tr>
                         <tr className="mgrbtm5">
                             <td colSpan={2}>&nbsp;</td>
                         </tr>
                         <tr>
                             <td className="legend">Ent Logon ID:</td>
-                            <td className="value">U813376</td>
+                            <td className="value">{selectedEmployee.uid}</td>
                         </tr>
                         <tr>
                             <td className="legend">Cost centre:</td>
-                            <td className="value">0229878</td>
+                            <td className="value">{selectedEmployee.costcentre}</td>
                         </tr>
                         <tr className="mgrbtm5">
                             <td colSpan={2}>&nbsp;</td>
