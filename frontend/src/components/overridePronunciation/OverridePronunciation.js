@@ -2,10 +2,14 @@ import "./OverridePronunciation.scss";
 import {useState, useEffect} from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import {SelectButton} from "primereact/selectbutton";
 import MicRecorder from "mic-recorder-to-mp3";
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
 export const OverridePronunciation = ({data}) => {
+    const options = ["Option 1", "Option 2"];
+    const [selectedOption, setSelectedOption] = useState(options[0]);
+
     const [isRecording, setIsRecording] = useState(false);
     const [isBlocked, setIsBlocked] = useState(false);
     const [isRecordingStp, setIsRecordingStp] = useState(false);
@@ -94,21 +98,21 @@ export const OverridePronunciation = ({data}) => {
 
     return (
         <>
+            <SelectButton value={selectedOption} options={options} onChange={(e) => setSelectedOption(e.value)} />
             <div className="override-pronunciation-modal">
-                <div className="select-section">
+                {selectedOption && selectedOption === options[0] && <div className="select-section">
                     <div className="elements">Change Country/Voice</div>
                     <audio src={`/api/v1/pronunciation/byId?uid=${data.uid}&fname=${data.firstname}&lname=${data.lastname}`} controls />
-                </div>
-                <div className="divider-section">- OR -</div>
-                <div className="record-section">
+                </div>}
+                {selectedOption && selectedOption === options[1] && <div className="record-section">
                     <div className="elements">Record Custom Audio</div>
-                    <audio src={blobURL} controls />
                     <div className="elements">
                         <Button variant="light" onClick={start} disabled={isRecording}>Record</Button>
                         <Button variant="danger" onClick={stop} disabled={!isRecording}>Stop</Button>
                         <Button variant="warning" onClick={reset} disabled={!isRecordingStp}>Reset</Button>
                     </div>
-                </div>
+                    <audio src={blobURL} controls />
+                </div>}
             </div>
             <Modal.Footer>
                 <Button variant="primary" onClick={save}>Save changes</Button>
