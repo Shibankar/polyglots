@@ -3,12 +3,16 @@ import {useState, useEffect} from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import {SelectButton} from "primereact/selectbutton";
+import {Dropdown} from "primereact/dropdown";
 import MicRecorder from "mic-recorder-to-mp3";
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
 export const OverridePronunciation = ({data}) => {
     const options = ["Option 1", "Option 2"];
     const [selectedOption, setSelectedOption] = useState(options[0]);
+
+    const [selectedCountry, setSelectedCountry] = useState(undefined);
+    const [countries, setCountries] = useState([]);
 
     const [isRecording, setIsRecording] = useState(false);
     const [isBlocked, setIsBlocked] = useState(false);
@@ -36,6 +40,10 @@ export const OverridePronunciation = ({data}) => {
                 setIsBlocked(true);
         });
     });
+
+    useEffect(() => {
+        setCountries([""]);
+    }, []);
 
     const start = () => {
         /*
@@ -102,6 +110,7 @@ export const OverridePronunciation = ({data}) => {
             <div className="override-pronunciation-modal">
                 {selectedOption && selectedOption === options[0] && <div className="select-section">
                     <div className="elements">Change Country/Voice</div>
+                    <Dropdown value={selectedCountry} options={countries} onChange={(e) => setSelectedCountry(e.value)} optionLabel="country" placeholder="Select a Country" />
                     <audio src={`/api/v1/pronunciation/byId?uid=${data.uid}&fname=${data.firstname}&lname=${data.lastname}`} controls />
                 </div>}
                 {selectedOption && selectedOption === options[1] && <div className="record-section">
