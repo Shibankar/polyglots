@@ -41,8 +41,9 @@ public class PronunciationController {
                                       @NotNull @RequestParam("fname") String fname,
                                       @NotNull @RequestParam("lname") String lname,
                                       @NotNull @RequestParam("country") String country,
-                                      @RequestParam(value = "voicename", required = false) String voiceName ) throws FileNotFoundException {
-        String filePath = pronunciationService.getPronunciation(uid, fname, lname, country, voiceName);
+                                      @RequestParam(value = "voicename", required = false) String voiceName,
+                                      @RequestParam(value = "voicegender", required = false) String voiceGender) throws FileNotFoundException {
+        String filePath = pronunciationService.getPronunciation(uid, fname, lname, country, voiceName, voiceGender);
         System.out.println(filePath);
         long length = new File(filePath).length();
         InputStreamResource inputStreamResource = new InputStreamResource(new FileInputStream(filePath));

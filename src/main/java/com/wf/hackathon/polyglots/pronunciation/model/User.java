@@ -1,6 +1,8 @@
 package com.wf.hackathon.polyglots.pronunciation.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -8,6 +10,8 @@ import java.util.Date;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "user_pronunciation", schema = "public")
 public class User {
@@ -21,6 +25,9 @@ public class User {
 
     @Column(name = "last_name")
     private String last_name;
+
+    @Column(name = "country")
+    private String country;
 
     @Column(name = "audio_file_path")
     private String audio_file_path;
