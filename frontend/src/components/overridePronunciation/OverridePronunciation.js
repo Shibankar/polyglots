@@ -73,7 +73,7 @@ export const OverridePronunciation = ({employeeData}) => {
         if (selectedCountry && allVoices.length !== 0) {
             setVoiceNames([...new Set(allVoices.filter(v => v.country === selectedCountry).map(v => v.voice_name))]);
         }
-    }, [selectedCountry]);
+    }, [allVoices, selectedCountry]);
 
     const start = () => {
         if (isBlocked) {
@@ -128,16 +128,14 @@ export const OverridePronunciation = ({employeeData}) => {
             <SelectButton value={selectedOption} options={options} onChange={(e) => setSelectedOption(e.value)} />
             <div className="override-pronunciation-modal">
                 {selectedOption && selectedOption === options[0] && <div className="select-section">
-                    <div className="elements">Change Country/Voice</div>
+                    <div className="elements">Change Country and Voice</div>
                     <div className="elements">
                         <Dropdown value={selectedCountry} options={countries} onChange={(e) => setSelectedCountry(e.value)} placeholder="Select a Country" />
-                    </div>
-                    <div className="elements">
                         <Dropdown value={selectedVoiceName} options={voiceNames} onChange={(e) => setSelectedVoiceName(e.value)} placeholder="Select a Voice" disabled={selectedCountry === undefined} />
                     </div>
                     {selectedCountry && selectedVoiceName
-                        ? <audio src={`/api/v1/pronunciation/byId?uid=${employeeData.uid}&fname=${employeeData.firstname}&lname=${employeeData.lastname}&country=${selectedCountry}&voicename=${selectedVoiceName}`} controls />
-                        : <audio src={`/api/v1/pronunciation/byId?uid=${employeeData.uid}&fname=${employeeData.firstname}&lname=${employeeData.lastname}&country=${employeeData.location}`} controls />}
+                        ? <audio preload="none" src={`/api/v1/pronunciation/byId?uid=${employeeData.uid}&fname=${employeeData.firstname}&lname=${employeeData.lastname}&country=${selectedCountry}&voicename=${selectedVoiceName}`} controls />
+                        : <audio preload="none" src={`/api/v1/pronunciation/byId?uid=${employeeData.uid}&fname=${employeeData.firstname}&lname=${employeeData.lastname}&country=${employeeData.location}`} controls />}
                 </div>}
                 {selectedOption && selectedOption === options[1] && <div className="record-section">
                     <div className="elements">Record Custom Audio</div>
@@ -150,7 +148,14 @@ export const OverridePronunciation = ({employeeData}) => {
                 </div>}
             </div>
             <Modal.Footer>
-                <Button variant="primary" onClick={save}>Save changes</Button>
+                <Button
+                    variant="primary"
+                    onClick={save}
+                    disabled={selectedOption === options[0]
+                        ? (selectedCountry === undefined && selectedCountry === undefined)
+                        : blob === undefined}>
+                    Save changes
+                </Button>
             </Modal.Footer>
         </>
     );
