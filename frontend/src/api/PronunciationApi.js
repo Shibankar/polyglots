@@ -19,3 +19,11 @@ export async function savePronunciation(uid, fname, lname, country, voicename, v
         { method: "POST", body: data });
     return response.json();
 }
+
+export function getPronunciationURL(uid, fname, lname, country) {
+    return `/api/v1/pronunciation/byId?uid=${uid}&fname=${fname}&lname=${lname}&country=${country}`;
+}
+
+export function getPronunciationURLWithVoiceName(uid, fname, lname, country, voicename) {
+    return `/api/v1/pronunciation/byId?uid=${uid}&fname=${fname}&lname=${lname}&country=${country}&voicename=${voicename}`;
+}

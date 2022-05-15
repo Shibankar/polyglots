@@ -1,6 +1,6 @@
 import "./OverridePronunciation.scss";
 import {useState, useEffect} from "react";
-import {getAllVoices, getUserById, savePronunciation} from "../../api/PronunciationApi";
+import {getAllVoices, getUserById, savePronunciation, getPronunciationURL, getPronunciationURLWithVoiceName} from "../../api/PronunciationApi";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import {SelectButton} from "primereact/selectbutton";
@@ -106,7 +106,7 @@ export const OverridePronunciation = ({employeeData}) => {
 
     const save = () => {
         let postdata = new FormData();
-        postdata.append('file', blob, employeeData.uid + ".wav");
+        postdata.append('file', selectedOption === options[0] ? "" : blob, employeeData.uid + ".wav");
 
         savePronunciation(
             employeeData.uid,
@@ -134,8 +134,8 @@ export const OverridePronunciation = ({employeeData}) => {
                         <Dropdown value={selectedVoiceName} options={voiceNames} onChange={(e) => setSelectedVoiceName(e.value)} placeholder="Select a Voice" disabled={selectedCountry === undefined} />
                     </div>
                     {selectedCountry && selectedVoiceName
-                        ? <audio preload="none" src={`/api/v1/pronunciation/byId?uid=${employeeData.uid}&fname=${employeeData.firstname}&lname=${employeeData.lastname}&country=${selectedCountry}&voicename=${selectedVoiceName}`} controls />
-                        : <audio preload="none" src={`/api/v1/pronunciation/byId?uid=${employeeData.uid}&fname=${employeeData.firstname}&lname=${employeeData.lastname}&country=${employeeData.location}`} controls />}
+                        ? <audio preload="none" src={getPronunciationURLWithVoiceName(employeeData.uid, employeeData.firstname ,employeeData.lastname, selectedCountry, selectedVoiceName)} controls />
+                        : <audio preload="none" src={getPronunciationURL(employeeData.uid, employeeData.firstname ,employeeData.lastname, employeeData.location)} controls />}
                 </div>}
                 {selectedOption && selectedOption === options[1] && <div className="record-section">
                     <div className="elements">Record Custom Audio</div>
