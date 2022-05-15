@@ -1,6 +1,7 @@
 package com.wf.hackathon.polyglots.pronunciation;
 
 import com.wf.hackathon.polyglots.pronunciation.exception.FileStorageException;
+import com.wf.hackathon.polyglots.pronunciation.exception.UserNotFoundException;
 import com.wf.hackathon.polyglots.pronunciation.model.User;
 import com.wf.hackathon.polyglots.pronunciation.model.Voice;
 import com.wf.hackathon.polyglots.pronunciation.repo.PronunciationRepo;
@@ -109,5 +110,12 @@ public class PronunciationService {
         } catch (IOException ex) {
             throw new FileStorageException("Could not store file " + fileName + ".wav" + ". Please try again!", ex);
         }
+    }
+
+    public User serviceOptOut(String uid, Boolean serviceOptOut) {
+        User dbUser = pronunciationRepo.findByUid(uid);
+        dbUser.setService_opt_out(serviceOptOut);
+
+        return pronunciationRepo.save(dbUser);
     }
 }
