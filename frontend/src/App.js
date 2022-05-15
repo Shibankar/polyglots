@@ -176,9 +176,9 @@ function App(data) {
                 </div>
                 <div className="content-4">
                     <div className="activity-header">
-                        <span>Santhosh Jayaraman's Activities</span>
+                        <span>{selectedEmployee.fullname}'s Activities</span>
                     </div>
-                    <div className="activity"> Santhosh Jayaraman has no activities.</div>
+                    <div className="activity"> {selectedEmployee.fullname} has no activities.</div>
                 </div>
             </div>
             <div className="org-content">
