@@ -1,30 +1,18 @@
-buildscript {
-	ext {
-		springBootVersion = '2.6.7'
-	}
-	repositories {
-		mavenCentral()
-		maven {
-			url "https://plugins.gradle.org/m2/"
-		}
-		gradlePluginPortal()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-		classpath "com.github.node-gradle:gradle-node-plugin:3.1.1"
-	}
-}
-
 plugins {
 	id 'org.springframework.boot' version '2.6.7'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'com.github.node-gradle.node' version "3.3.0"
 }
 
-apply plugin: 'java'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
-apply plugin: 'com.github.node-gradle.node'
+repositories {
+	mavenCentral()
+	maven {
+		url "https://plugins.gradle.org/m2/"
+	}
+	maven { url "https://azureai.azureedge.net/maven/"}
+	gradlePluginPortal()
+}
 
 group = 'com.wf.hackathon'
 version = '0.0.1-SNAPSHOT'
@@ -43,8 +31,9 @@ dependencies {
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.6.6'
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.6.6'
 	implementation group: 'com.yugabyte', name: 'ysql', version: '42.2.7-yb-2'
-	implementation group: 'com.github.paulcwarren', name: 'content-fs-spring-boot-starter', version: '2.3.0'
-	implementation group: 'com.github.paulcwarren', name: 'spring-content-rest-boot-starter', version: '2.3.0'
+	implementation group: 'com.microsoft.cognitiveservices.speech', name: 'client-sdk', version: "1.21.0", ext: "jar"
+//	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
+//	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
