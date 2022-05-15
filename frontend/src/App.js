@@ -2,7 +2,7 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";  //theme
 import "primereact/resources/primereact.min.css";                  //core css
 import "primeicons/primeicons.css";                                //icons
 import "./App.scss";
-import {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {SearchEmployee} from "./components/searchEmployee/SearchEmployee";
 import AppLogo from "./images/wf_logo_48px.png";
 import AlertsIcon from "./images/alert1.png";
@@ -14,15 +14,68 @@ import Santhosh from "./images/avatars/Santhosh.jpeg";
 import {CustomModal} from "./components/customModal/CustomModal";
 import {PlayPronunciation} from "./components/playPronunciation/PlayPronunciation";
 import {OverridePronunciation} from "./components/overridePronunciation/OverridePronunciation";
+import OptInIcon from "./images/optin.png"
+import OptOutIcon from "./images/optout.png"
+
+import {getUserById, savePronunciation, getPronunciation,getPronunciationURL} from "./api/PronunciationApi";
+
 
 function App(data) {
     const [selectedEmployee, setSelectedEmployee] = useState(undefined);
     const [showPlayModal, setShowPlayModal] = useState(false);
     const [showOverrideModal, setShowOverrideModal] = useState(false);
+    const [userVoiceData, setUserVoiceData] = useState(undefined);
+    const [generatedAudio, setGeneratedAudio] = useState(undefined);
+    const [optOut, setOptOut] = useState(false);
 
+
+    useEffect(() => {
+        if(selectedEmployee){
+        if (selectedEmployee.uid) {
+            getUserById(selectedEmployee.uid)
+                .then(data => {setUserVoiceData(data);
+                console.log(userVoiceData);})
+                .catch((e) => console.error(e));
+        }}
+    }, [selectedEmployee]);
+    
     const getImage = (image) => {
-        return <img src={require(`./images/avatars/${image}.jpeg`)}  alt="profile" />
+
+        const tryRequire = (image) => {
+            try {
+             return require(`./images/avatars/${image}.jpeg`);
+            } catch (err) {
+                return require(`./images/avatars/${image}.png`);
+            }
+          };
+
+        return <img src={tryRequire(image)}  alt="profile" />
      }
+
+     const saveOptOut = (optout) => {
+        /* var generatedAudioURL = getPronunciationURL(selectedEmployee.uid, selectedEmployee.firstname ,selectedEmployee.lastname, selectedEmployee.location);
+        
+            getPronunciation(generatedAudioURL)
+            .then(data => data.blob())
+            .then(blobFile => setGeneratedAudio(new File([blobFile], "generatedAudio", { type: "audio/vnd.wav" })));
+    
+        
+            let postdata = new FormData();
+            postdata.append('file', generatedAudio , selectedEmployee.uid + ".wav");
+        */
+            savePronunciation(selectedEmployee.uid, selectedEmployee.firstname, selectedEmployee.lastname,
+                selectedEmployee.location,
+                "Custom",
+                "Custom",
+                optOut,
+                null)
+                .then(data => {
+                    console.log('API Response', data);
+                    setOptOut(true);
+                })
+                .catch(error => console.log("Error : ", error));
+        }
+    
 
     return (
         <>
@@ -101,9 +154,10 @@ function App(data) {
                 <div className="content-1">
                     <div className="name">
                         <span>{selectedEmployee.fullname}</span>
-                        <img src={PlayIcon} onClick={() => setShowPlayModal(true)} alt="play-icon" />
-                        <img src={RecordIcon} onClick={() => setShowOverrideModal(true)} alt="record-icon" />
-                        <img src={SilentIcon} alt="silent-icon" />
+                        {!selectedEmployee.optout && <img src={PlayIcon} onClick={() => setShowPlayModal(true)} alt="play-icon" />}
+                        {!selectedEmployee.optout && <img src={RecordIcon} onClick={() => setShowOverrideModal(true)} alt="record-icon" />}
+                        {!selectedEmployee.optout && <img src={OptOutIcon} onClick={() => saveOptOut(false)} alt="Opt-Out" />}
+                        {selectedEmployee.optout && <img src={OptInIcon} onClick={() => saveOptOut(false)} alt="Opt-In" />}
                     </div>
                     <div className="geography">{selectedEmployee.title}</div>
                     <div className="follow"> Follow this person</div>
