@@ -27,7 +27,16 @@ export const SearchEmployee = ({setSelection}) => {
      }
 
      const getImage = (image) => {
-        return <img src={require(`../../images/avatars/${image}.jpeg`)} alt="profile" />
+
+        const tryRequire = (image) => {
+            try {
+             return require(`./../../images/avatars/${image}.jpeg`);
+            } catch (err) {
+                return require(`./../../images/avatars/${image}.png`);
+            }
+          };
+
+        return <img src={tryRequire(image)}  alt="profile" />
      }
 
      const itemTemplate = (item) => {
