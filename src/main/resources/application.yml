@@ -5,11 +5,21 @@ spring:
     properties:
       hibernate:
         dialect: "org.hibernate.dialect.PostgreSQLDialect"
+        default_schema: "public"
+
 appdb:
   datasource:
-    jdbc-url: "jdbc:postgresql://ap-south-1.a29d4f8e-c5b6-46f4-aa6c-f021edd42132.aws.ybdb.io:5433/polyglots?ssl=true&sslmode=verify-full&sslrootcert=/Users/shibankar/Documents/root.crt"
+    jdbc-url: ""
     username: ""
     password: ""
     pool-name: "Hikari-yb-pool"
+    maximum-pool-size: 4
+    validation-query: "Select 1"
+    testOnBorrow: true
 
+
+azure:
+  cognitiveservice:
+    subscriptionkey: "3bb7968a4024404187a5a95c4c82548f"
+    serviceregion: "eastus"
 

@@ -2,12 +2,9 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";  //theme
 import "primereact/resources/primereact.min.css";                  //core css
 import "primeicons/primeicons.css";                                //icons
 import "./App.scss";
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import {SearchEmployee} from "./components/searchEmployee/SearchEmployee";
-import {EmployeeData} from "./components/employeeData/EmployeeData";
-import {getPronunciation} from "./api/PronunciationApi";
 import AppLogo from "./images/wf_logo_48px.png";
-import UserIcon from "./images/user-icon.jpeg";
 import AlertsIcon from "./images/alert1.png";
 import SettingsIcon from "./images/settings.png";
 import PlayIcon from "./images/play.png";
@@ -20,27 +17,18 @@ import {OverridePronunciation} from "./components/overridePronunciation/Override
 
 function App(data) {
     const [selectedEmployee, setSelectedEmployee] = useState(undefined);
-    const [showEmployeeData, setShowEmployeeData] = useState(false);
-    const [currentUser, setCurrentUser] = useState(data);
-    const [pronunciation, setPronunciation] = useState(undefined);
     const [showPlayModal, setShowPlayModal] = useState(false);
     const [showOverrideModal, setShowOverrideModal] = useState(false);
 
-    useEffect(() => {
-        if (selectedEmployee !== undefined && selectedEmployee.uid !== null && selectedEmployee.firstname !== null && selectedEmployee.lastname !== null) {
-            setPronunciation(getPronunciation(selectedEmployee.uid, selectedEmployee.firstname, selectedEmployee.lastname));
-        }
-    }, [selectedEmployee]);
-
     const getImage = (image) => {
-        return <img src={require(`./images/avatars/${image}.jpeg`)} />
+        return <img src={require(`./images/avatars/${image}.jpeg`)}  alt="profile" />
      }
 
     return (
         <>
         <div className="user-header">
             <div className="user-img">
-                <img src={Santhosh}/>
+                <img src={Santhosh} alt="santhosh-profile" />
             </div>
             <div className="user-name">
                 <div className="name">
@@ -54,10 +42,10 @@ function App(data) {
                 <span>Sites A-Z</span>
             </div>
             <div className="user-bell">
-                <img src={AlertsIcon}/>
+                <img src={AlertsIcon} alt="alert-icon" />
             </div>
             <div className="user-settings">
-                <img src={SettingsIcon}/>
+                <img src={SettingsIcon} alt="settings-icon" />
             </div>
         </div>
         <div className="app-header">
@@ -80,7 +68,7 @@ function App(data) {
                         </select>
                     </div>
                     <div>
-                        <SearchEmployee showSelection={setShowEmployeeData} setSelection={setSelectedEmployee} />
+                        <SearchEmployee setSelection={setSelectedEmployee} />
                     </div>
                 </div>
                 <div className="search-panel-2">
@@ -113,13 +101,13 @@ function App(data) {
                 <div className="content-1">
                     <div className="name">
                         <span>{selectedEmployee.fullname}</span>
-                        <img src={PlayIcon} onClick={() => setShowPlayModal(true)} />
-                        <img src={RecordIcon} onClick={() => setShowOverrideModal(true)} />
-                        <img src={SilentIcon} />
+                        <img src={PlayIcon} onClick={() => setShowPlayModal(true)} alt="play-icon" />
+                        <img src={RecordIcon} onClick={() => setShowOverrideModal(true)} alt="record-icon" />
+                        <img src={SilentIcon} alt="silent-icon" />
                     </div>
-                    <div className="geography">Software Engineer Senior Manager | GENERAL MANAGEMENT</div>
+                    <div className="geography">{selectedEmployee.title}</div>
                     <div className="follow"> Follow this person</div>
-                    <h3 className="org">25 Directs, 25 Total Team | View Org Chart</h3>
+                    {selectedEmployee.reportees && <h3 className="org">{selectedEmployee.reportees} | View Org Chart</h3>}
                     <div className="action"></div>
                     <div className="mention">
                         Feel free to <span>mention</span> me in a post
@@ -135,50 +123,50 @@ function App(data) {
                         <tbody>
                         <tr>
                             <td className="legend">Legal Name:</td>
-                            <td className="value">Santhosh Jayaraman</td>
+                            <td className="value">{selectedEmployee.fullname}</td>
                         </tr>
                         <tr className="mgrbtm5">
                             <td colSpan={2}>&nbsp;</td>
                         </tr>
                         <tr>
                             <td className="legend">Work Phone:</td>
-                            <td className="value">+91 98808 87085</td>
+                            <td className="value">{selectedEmployee.wphone}</td>
                         </tr>
                         <tr>
                             <td className="legend">Mobile:</td>
-                            <td className="value">+91 98808 87085</td>
+                            <td className="value">{selectedEmployee.mobile}</td>
                         </tr>
                         <tr className="mgrbtm5">
                             <td colSpan={2}>&nbsp;</td>
                         </tr>
                         <tr>
                             <td className="legend">Email:</td>
-                            <td className="value">santhosh.jayaraman@wellsfargo.com</td>
+                            <td className="value">{selectedEmployee.email}</td>
                         </tr>
                         <tr className="mgrbtm5">
                             <td colSpan={2}>&nbsp;</td>
                         </tr>
                         <tr>
                             <td className="legend">MAC:</td>
-                            <td className="value">O2830-010</td>
+                            <td className="value">{selectedEmployee.mac}</td>
                         </tr>
                         <tr className="mgrbtm5">
                             <td colSpan={2}>&nbsp;</td>
                         </tr>
                         <tr>
                             <td className="legend">Address:</td>
-                            <td className="value">4001 Woodcreek Oaks Blvd</td>
+                            <td className="value">{selectedEmployee.address}</td>
                         </tr>
                         <tr className="mgrbtm5">
                             <td colSpan={2}>&nbsp;</td>
                         </tr>
                         <tr>
                             <td className="legend">Ent Logon ID:</td>
-                            <td className="value">U813376</td>
+                            <td className="value">{selectedEmployee.uid}</td>
                         </tr>
                         <tr>
                             <td className="legend">Cost centre:</td>
-                            <td className="value">0229878</td>
+                            <td className="value">{selectedEmployee.costcentre}</td>
                         </tr>
                         <tr className="mgrbtm5">
                             <td colSpan={2}>&nbsp;</td>
@@ -200,7 +188,6 @@ function App(data) {
                     </div>
                     <div className="content">
                        <span>Manager you share</span>
-                       <img></img>
                     </div>
                 </div>
                 <div className="org-outline">
@@ -209,7 +196,6 @@ function App(data) {
                 </div>
                 <div className="content">
                        <span>Org Image</span>
-                       <img></img>
                 </div>
                 </div>
                 
@@ -219,18 +205,14 @@ function App(data) {
             showModal={showPlayModal}
             setShowModal={setShowPlayModal}
             title="Play Pronunciation"
-            body={<PlayPronunciation
-                data={selectedEmployee}
-            />}
+            body={<PlayPronunciation employeeData={selectedEmployee} />}
         />
         <CustomModal
             showModal={showOverrideModal}
             setShowModal={setShowOverrideModal}
             title="Add Custom Pronunciation"
-            body={<OverridePronunciation
-            data={selectedEmployee} />}
-            showFooter
-            largeSize />
+            body={<OverridePronunciation employeeData={selectedEmployee} />}
+        />
        </>
       );
 }
