@@ -1,4 +1,3 @@
-/*
 package com.wf.hackathon.polyglots;
 
 import org.junit.jupiter.api.Test;
@@ -12,4 +11,3 @@ class PolyglotsApplicationTests {
 	}
 
 }
-*/
