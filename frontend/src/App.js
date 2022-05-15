@@ -211,7 +211,7 @@ function App(data) {
             showModal={showOverrideModal}
             setShowModal={setShowOverrideModal}
             title="Add Custom Pronunciation"
-            body={<OverridePronunciation employeeData={selectedEmployee} />}
+            body={<OverridePronunciation employeeData={selectedEmployee} setShowOverrideModal={setShowOverrideModal} />}
         />
        </>
       );

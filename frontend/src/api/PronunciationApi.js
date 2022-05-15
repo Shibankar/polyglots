@@ -20,6 +20,11 @@ export async function savePronunciation(uid, fname, lname, country, voicename, v
     return response.json();
 }
 
+export async function getPronunciation(url) {
+    const response = await fetch(url, { method: "GET" });
+    return response;
+}
+
 export function getPronunciationURL(uid, fname, lname, country) {
     return `/api/v1/pronunciation/byId?uid=${uid}&fname=${fname}&lname=${lname}&country=${country}`;
 }
