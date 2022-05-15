@@ -40,6 +40,15 @@ public class PronunciationService {
         String path;
         Voice voice;
 
+        //Check if user exists in DB
+        User dbUser = pronunciationRepo.findByUid(uid);
+        if (dbUser != null) {
+            path = dbUser.getAudio_file_path();
+            dbUser.setAudio_file_path(path);
+            pronunciationRepo.save(dbUser);
+            return path;
+        }
+
         //Check if VoiceName provided
         if (voiceName != null) {
             MsCognitiveServiceClient msCognitiveServiceClient = new MsCognitiveServiceClient();
@@ -47,14 +56,6 @@ public class PronunciationService {
             path = msCognitiveServiceClient.generateSpeechAndSave(uid, fname + " " + lname, voiceName, basePath);
             User user = new User(uid, fname, lname, country, path, new Date(), voiceName, voiceGender, false);
             pronunciationRepo.save(user);
-            return path;
-        }
-        //Check if user exists in DB
-        User dbUser = pronunciationRepo.findByUid(uid);
-        if (dbUser != null) {
-            path = dbUser.getAudio_file_path();
-            dbUser.setAudio_file_path(path);
-            pronunciationRepo.save(dbUser);
             return path;
         }
 
@@ -73,7 +74,7 @@ public class PronunciationService {
         MsCognitiveServiceClient msCognitiveServiceClient = new MsCognitiveServiceClient();
         System.out.println(voice.getVoice_name());
         path = msCognitiveServiceClient.generateSpeechAndSave(uid, fname + " " + lname, voice.getVoice_name(), basePath);
-        User user = new User(uid, fname, lname, voice.getCountry(), path + uid + ".wav", new Date(), voice.getVoice_name(), voice.getGender(), false);
+        User user = new User(uid, fname, lname, voice.getCountry(), path, new Date(), voice.getVoice_name(), voice.getGender(), false);
         pronunciationRepo.save(user);
 
         return path;
