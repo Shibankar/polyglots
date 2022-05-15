@@ -36,7 +36,7 @@ public class PronunciationService {
         this.voiceRepo = voiceRepo;
     }
 
-    public String getPronunciation(String uid, String fname, String lname, String country, String voiceName) {
+    public String getPronunciation(String uid, String fname, String lname, String country, String voiceName, String voiceGender) {
         String path;
         Voice voice;
 
@@ -45,12 +45,16 @@ public class PronunciationService {
             MsCognitiveServiceClient msCognitiveServiceClient = new MsCognitiveServiceClient();
             System.out.println(voiceName);
             path = msCognitiveServiceClient.generateSpeechAndSave(uid, fname + " " + lname, voiceName, basePath);
+            User user = new User(uid, fname, lname, country, path, new Date(), voiceName, voiceGender, false);
+            pronunciationRepo.save(user);
             return path;
         }
         //Check if user exists in DB
-        User user = pronunciationRepo.findByUid(uid);
-        if (user != null) {
-            path = user.getAudio_file_path();
+        User dbUser = pronunciationRepo.findByUid(uid);
+        if (dbUser != null) {
+            path = dbUser.getAudio_file_path();
+            dbUser.setAudio_file_path(path);
+            pronunciationRepo.save(dbUser);
             return path;
         }
 
@@ -69,6 +73,8 @@ public class PronunciationService {
         MsCognitiveServiceClient msCognitiveServiceClient = new MsCognitiveServiceClient();
         System.out.println(voice.getVoice_name());
         path = msCognitiveServiceClient.generateSpeechAndSave(uid, fname + " " + lname, voice.getVoice_name(), basePath);
+        User user = new User(uid, fname, lname, voice.getCountry(), path + uid + ".wav", new Date(), voice.getVoice_name(), voice.getGender(), false);
+        pronunciationRepo.save(user);
 
         return path;
     }
@@ -81,6 +87,7 @@ public class PronunciationService {
         user.setFirst_name(fname);
         user.setLast_name(lname);
         user.setLast_modified_date(new Date());
+        user.setCountry(country);
         try {
             if (serviceOptOut) {
                 user.setVoice_name("N/A");

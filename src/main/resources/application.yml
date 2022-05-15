@@ -13,6 +13,10 @@ appdb:
     username: ""
     password: ""
     pool-name: "Hikari-yb-pool"
+    maximum-pool-size: 4
+    validation-query: "Select 1"
+    testOnBorrow: true
+
 
 azure:
   cognitiveservice:
