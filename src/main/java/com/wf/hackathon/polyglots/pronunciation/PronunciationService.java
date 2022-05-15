@@ -1,7 +1,6 @@
 package com.wf.hackathon.polyglots.pronunciation;
 
 import com.wf.hackathon.polyglots.pronunciation.exception.FileStorageException;
-import com.wf.hackathon.polyglots.pronunciation.exception.UserNotFoundException;
 import com.wf.hackathon.polyglots.pronunciation.model.User;
 import com.wf.hackathon.polyglots.pronunciation.model.Voice;
 import com.wf.hackathon.polyglots.pronunciation.repo.PronunciationRepo;
@@ -24,7 +23,7 @@ import java.util.Random;
 @Transactional
 public class PronunciationService {
 
-    String basePath = "/polyglots/audioclips/";
+    String basePath = "";
 
     @Autowired
     private final PronunciationRepo pronunciationRepo;

@@ -17,7 +17,7 @@ import {OverridePronunciation} from "./components/overridePronunciation/Override
 import OptInIcon from "./images/optin.png"
 import OptOutIcon from "./images/optout.png"
 
-import {getUserById, savePronunciation, getPronunciation,getPronunciationURL} from "./api/PronunciationApi";
+import {getUserById, saveOptOut} from "./api/PronunciationApi";
 
 
 function App(data) {
@@ -33,11 +33,17 @@ function App(data) {
         if(selectedEmployee){
         if (selectedEmployee.uid) {
             getUserById(selectedEmployee.uid)
-                .then(data => {setUserVoiceData(data);
-                console.log(userVoiceData);})
-                .catch((e) => console.error(e));
+                .then(data => {
+                    setUserVoiceData(data);
+                    setOptOut(data.service_opt_out);
+                })
+                .catch((e) => 
+                {
+                    setOptOut(false);
+                    console.error(e)
+                });
         }}
-    }, [selectedEmployee]);
+    }, [selectedEmployee, optOut]);
     
     const getImage = (image) => {
 
@@ -52,26 +58,11 @@ function App(data) {
         return <img src={tryRequire(image)}  alt="profile" />
      }
 
-     const saveOptOut = (optout) => {
-        /* var generatedAudioURL = getPronunciationURL(selectedEmployee.uid, selectedEmployee.firstname ,selectedEmployee.lastname, selectedEmployee.location);
-        
-            getPronunciation(generatedAudioURL)
-            .then(data => data.blob())
-            .then(blobFile => setGeneratedAudio(new File([blobFile], "generatedAudio", { type: "audio/vnd.wav" })));
-    
-        
-            let postdata = new FormData();
-            postdata.append('file', generatedAudio , selectedEmployee.uid + ".wav");
-        */
-            savePronunciation(selectedEmployee.uid, selectedEmployee.firstname, selectedEmployee.lastname,
-                selectedEmployee.location,
-                "Custom",
-                "Custom",
-                optOut,
-                null)
+     const updateOptOut = (value) => {
+            saveOptOut(selectedEmployee.uid, value)
                 .then(data => {
                     console.log('API Response', data);
-                    setOptOut(true);
+                    setOptOut(data.service_opt_out);
                 })
                 .catch(error => console.log("Error : ", error));
         }
@@ -154,10 +145,10 @@ function App(data) {
                 <div className="content-1">
                     <div className="name">
                         <span>{selectedEmployee.fullname}</span>
-                        {!selectedEmployee.optout && <img src={PlayIcon} onClick={() => setShowPlayModal(true)} alt="play-icon" />}
-                        {!selectedEmployee.optout && <img src={RecordIcon} onClick={() => setShowOverrideModal(true)} alt="record-icon" />}
-                        {!selectedEmployee.optout && <img src={OptOutIcon} onClick={() => saveOptOut(false)} alt="Opt-Out" />}
-                        {selectedEmployee.optout && <img src={OptInIcon} onClick={() => saveOptOut(false)} alt="Opt-In" />}
+                        {!optOut && <img src={PlayIcon} onClick={() => setShowPlayModal(true)} alt="play-icon" />}
+                        {!optOut && selectedEmployee.firstname == "Santhosh" && <img src={RecordIcon} onClick={() => setShowOverrideModal(true)} alt="record-icon" />}
+                        {!optOut && selectedEmployee.firstname == "Santhosh" && <img src={OptOutIcon} onClick={() => updateOptOut(true)} alt="Opt-Out" />}
+                        {optOut && selectedEmployee.firstname == "Santhosh" && <img src={OptInIcon} onClick={() => updateOptOut(false)} alt="Opt-In" />}
                     </div>
                     <div className="geography">{selectedEmployee.title}</div>
                     <div className="follow"> Follow this person</div>

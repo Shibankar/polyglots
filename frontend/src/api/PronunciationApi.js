@@ -1,6 +1,7 @@
 const GET_USER_BY_ID_PATH = "/api/v1/pronunciation/getUserById?uid=";
 const GET_ALL_VOICES_PATH = "/api/v1/pronunciation/getVoices";
 const SAVE_PATH = "/api/v1/pronunciation/save";
+const SAVE_OPT_OUT_PATH = "/api/v1/pronunciation/serviceOptOut"
 
 export async function getUserById(uid) {
     const response = await fetch(GET_USER_BY_ID_PATH + uid, { method: "GET" });
@@ -19,6 +20,17 @@ export async function savePronunciation(uid, fname, lname, country, voicename, v
         { method: "POST", body: data });
     return response.json();
 }
+
+
+export async function saveOptOut(uid, serviceOptOut) {
+    console.log("api call");
+    console.log(uid);
+    console.log(serviceOptOut);
+    const response = await fetch(SAVE_OPT_OUT_PATH + "?uid=" + uid + "&serviceOptOut=" + serviceOptOut,
+        { method: "POST", body: null });
+    return response.json();
+}
+
 
 export async function getPronunciation(url) {
     const response = await fetch(url, { method: "GET" });
