@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: "polyglots"
+  jpa:
+    properties:
+      hibernate:
+        dialect: "org.hibernate.dialect.PostgreSQLDialect"
+        default_schema: "public"
+
+appdb:
+  datasource:
+    jdbc-url: "jdbc:postgresql://localhost/yugabyte"
+    username: "username"
+    password: "password"
+    pool-name: "Hikari-yb-pool"
+    maxLifetime: 60000
+    maximum-pool-size: 15
+    validation-query: "Select 1"
+    test-on-borrow: true
+    test-while-idle: true
+    max-life-time: 120000
+
+azure:
+  cognitiveservice:
+    subscriptionkey: "abcdef"
+    serviceregion: "region"
+
