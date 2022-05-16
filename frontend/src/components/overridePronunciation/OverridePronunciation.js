@@ -9,7 +9,7 @@ import MicRecorder from "mic-recorder-to-mp3";
 const Mp3Recorder = new MicRecorder({ bitRate: 128 });
 
 export const OverridePronunciation = ({employeeData, setShowOverrideModal}) => {
-    const options = ["Option 1", "Option 2"];
+    const options = ["Preset", "Custom"];
     const [selectedOption, setSelectedOption] = useState(options[0]);
     const [userVoiceData, setUserVoiceData] = useState(undefined);
 
