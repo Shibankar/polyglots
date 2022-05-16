@@ -67,6 +67,13 @@ public class PronunciationController {
             return pronunciationService.savePronunciation(file, uid, fname, lname, country, voiceName, voiceGender, serviceOptOut);
     }
 
+    @PostMapping(value = "/serviceOptOut")
+    public User serviceOptOut(@NotNull @RequestParam("uid") String uid,
+                           @NotNull @RequestParam("serviceOptOut") Boolean serviceOptOut){
+
+        return pronunciationService.serviceOptOut(uid, serviceOptOut);
+    }
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, value = "/getVoices")
     public ResponseEntity<List<Voice>> getAllVoices() {
         return ResponseEntity.ok().body(voiceRepo.findAll());

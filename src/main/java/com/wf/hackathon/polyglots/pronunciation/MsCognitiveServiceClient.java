@@ -3,8 +3,8 @@ package com.wf.hackathon.polyglots.pronunciation;
 import com.microsoft.cognitiveservices.speech.*;
 
 public class MsCognitiveServiceClient {
-    private static String YourSubscriptionKey = "";
-    private static String YourServiceRegion = "";
+    private static String YourSubscriptionKey = "3bb7968a4024404187a5a95c4c82548f";
+    private static String YourServiceRegion = "eastus";
 
     public String generateSpeechAndSave(String uid, String text, String voiceName, String pathToSave) {
         try {
