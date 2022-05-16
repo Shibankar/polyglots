@@ -9,9 +9,9 @@ spring:
 
 appdb:
   datasource:
-    jdbc-url: "jdbc:postgresql://20.127.243.191:5433/yugabyte"
-    username: "yugabyte"
-    password: "Hackathon22!"
+    jdbc-url: ""
+    username: ""
+    password: ""
     pool-name: "Hikari-yb-pool"
     maxLifetime: 60000
     maximum-pool-size: 15
@@ -22,6 +22,6 @@ appdb:
 
 azure:
   cognitiveservice:
-    subscriptionkey: "3bb7968a4024404187a5a95c4c82548f"
-    serviceregion: "eastus"
+    subscriptionkey: ""
+    serviceregion: ""
 
