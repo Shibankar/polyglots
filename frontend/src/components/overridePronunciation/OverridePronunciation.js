@@ -152,7 +152,14 @@ export const OverridePronunciation = ({employeeData, setShowOverrideModal}) => {
                         <Dropdown value={selectedCountry} options={countries} onChange={(e) => setSelectedCountry(e.value)} placeholder="Select a Country" />
                         <Dropdown value={selectedVoiceName} options={voiceNames} onChange={(e) => setSelectedVoiceName(e.value)} placeholder="Select a Voice" disabled={selectedCountry === undefined} />
                     </div>
-                    <audio preload="none" src={selectedCountry && selectedVoiceName ? generatedAudioURL : getPronunciationURL(employeeData.uid, employeeData.firstname ,employeeData.lastname, employeeData.location)} controls />
+                    <audio preload="none" src={
+                        selectedCountry &&
+                        countries.includes(selectedCountry)
+                        && selectedVoiceName &&
+                        voiceNames.includes(selectedVoiceName)?
+                            generatedAudioURL :
+                            getPronunciationURL(employeeData.uid, employeeData.firstname ,employeeData.lastname, employeeData.location)}
+                    controls />
                 </div>}
                 {selectedOption && selectedOption === options[1] && <div className="record-section">
                     <div className="elements">Record Custom Audio</div>
