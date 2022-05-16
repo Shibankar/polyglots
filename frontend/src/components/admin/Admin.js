@@ -145,9 +145,9 @@ function App(data) {
                     <div className="name">
                         <span>{selectedEmployee.fullname}</span>
                         {!optOut && <img src={PlayIcon} onClick={() => setShowPlayModal(true)} alt="play-icon" />}
-                        {!optOut && selectedEmployee.firstname == "Santhosh" && <img src={RecordIcon} onClick={() => setShowOverrideModal(true)} alt="record-icon" />}
-                        {!optOut && selectedEmployee.firstname == "Santhosh" && <img src={OptOutIcon} onClick={() => updateOptOut(true)} alt="Opt-Out" />}
-                        {optOut && selectedEmployee.firstname == "Santhosh" && <img src={OptInIcon} onClick={() => updateOptOut(false)} alt="Opt-In" />}
+                        {!optOut  && <img src={RecordIcon} onClick={() => setShowOverrideModal(true)} alt="record-icon" />}
+                        {!optOut && <img src={OptOutIcon} onClick={() => updateOptOut(true)} alt="Opt-Out" />}
+                        {optOut && <img src={OptInIcon} onClick={() => updateOptOut(false)} alt="Opt-In" />}
                     </div>
                     <div className="geography">{selectedEmployee.title}</div>
                     <div className="follow"> Follow this person</div>
