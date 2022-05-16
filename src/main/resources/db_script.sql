@@ -41,3 +41,40 @@ insert into public.voice_name (country, locale, gender, voice_name) values ('Uni
 insert into public.voice_name (country, locale, gender, voice_name) values ('United States', 'en-US', 'Female', 'en-US-CoraNeural');
 insert into public.voice_name (country, locale, gender, voice_name) values ('United States', 'en-US', 'Female', 'en-US-AshleyNeural');
 insert into public.voice_name (country, locale, gender, voice_name) values ('United States', 'en-US', 'Female', 'en-US-AmberNeural');
+--------
+insert into public.voice_name (country, locale, gender, voice_name) values ('Canada', 'en-CA', 'Female', 'en-CA-ClaraNeural');
+insert into public.voice_name (country, locale, gender, voice_name) values ('Canada', 'en-CA', 'Male', 'en-CA-LiamNeural');
+
+insert into public.voice_name (country, locale, gender, voice_name) values ('Hongkong', 'en-HK', 'Female', 'en-HK-YanNeural');
+insert into public.voice_name (country, locale, gender, voice_name) values ('Hongkong', 'en-HK', 'Male', 'en-HK-SamNeural');
+
+insert into public.voice_name (country, locale, gender, voice_name) values ('India', 'en-IN', 'Female', 'en-IN-NeerjaNeural');
+insert into public.voice_name (country, locale, gender, voice_name) values ('India', 'en-IN', 'Male', 'en-IN-PrabhatNeural');
+
+insert into public.voice_name (country, locale, gender, voice_name) values ('Ireland', 'en-IE', 'Female', 'en-IE-EmilyNeural');
+insert into public.voice_name (country, locale, gender, voice_name) values ('Ireland', 'en-IE', 'Male', 'en-IE-ConnorNeural');
+
+insert into public.voice_name (country, locale, gender, voice_name) values ('Kenya', 'en-KE', 'Female', 'en-KE-AsiliaNeural');
+insert into public.voice_name (country, locale, gender, voice_name) values ('Kenya', 'en-KE', 'Male', 'en-KE-ChilembaNeural');
+
+insert into public.voice_name (country, locale, gender, voice_name) values ('New Zealand', 'en-NZ', 'Female', 'en-NZ-MollyNeural');
+insert into public.voice_name (country, locale, gender, voice_name) values ('New Zealand', 'en-NZ', 'Male', 'en-NZ-MitchellNeural');
+
+insert into public.voice_name (country, locale, gender, voice_name) values ('Nigeria', 'en-NG', 'Female', 'en-NG-EzinneNeural');
+insert into public.voice_name (country, locale, gender, voice_name) values ('Nigeria', 'en-NG', 'Male', 'en-NG-AbeoNeural');
+
+insert into public.voice_name (country, locale, gender, voice_name) values ('Philippines', 'en-PH', 'Female', 'en-PH-RosaNeural');
+insert into public.voice_name (country, locale, gender, voice_name) values ('Philippines', 'en-PH', 'Male', 'en-PH-JamesNeural');
+
+insert into public.voice_name (country, locale, gender, voice_name) values ('Singapore', 'en-SG', 'Female', 'en-SG-LunaNeural');
+insert into public.voice_name (country, locale, gender, voice_name) values ('Singapore', 'en-SG', 'Male', 'en-SG-WayneNeural');
+
+insert into public.voice_name (country, locale, gender, voice_name) values ('South Africa', 'en-ZA', 'Female', 'en-ZA-LeahNeural');
+insert into public.voice_name (country, locale, gender, voice_name) values ('South Africa', 'en-ZA', 'Male', 'en-ZA-LukeNeural');
+
+insert into public.voice_name (country, locale, gender, voice_name) values ('Tanzania', 'en-TZ', 'Female', 'en-TZ-ImaniNeural');
+insert into public.voice_name (country, locale, gender, voice_name) values ('Tanzania', 'en-TZ', 'Male', 'en-TZ-ElimuNeural');
+
+insert into public.voice_name (country, locale, gender, voice_name) values ('United Kingdom', 'en-GB', 'Female', 'en-GB-LibbyNeural');
+insert into public.voice_name (country, locale, gender, voice_name) values ('United Kingdom', 'en-GB', 'Female', 'en-GB-SoniaNeural');
+insert into public.voice_name (country, locale, gender, voice_name) values ('United Kingdom', 'en-GB', 'Male', 'en-GB-RyanNeural');
