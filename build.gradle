@@ -2,6 +2,16 @@ plugins {
 	id 'org.springframework.boot' version '2.6.7'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'com.github.node-gradle.node' version "3.3.0"
+}
+
+repositories {
+	mavenCentral()
+	maven {
+		url "https://plugins.gradle.org/m2/"
+	}
+	maven { url "https://azureai.azureedge.net/maven/"}
+	gradlePluginPortal()
 }
 
 group = 'com.wf.hackathon'
@@ -12,11 +22,6 @@ configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
-}
-
-repositories {
-	mavenCentral()
-	maven { url "https://azureai.azureedge.net/maven/"}
 }
 
 dependencies {
@@ -36,4 +41,35 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+task copyWebApp(type: Copy) {
+	from 'frontend/build'
+	into 'build/resources/main/static/.'
+}
+
+task appNpmInstall(type: NpmTask) {
+	description = "Installs all dependencies from package.json"
+	workingDir = file("${project.projectDir}/frontend")
+	args = ["install"]
+}
+
+task appNpmBuild(type: NpmTask) {
+	description = "Builds production version of the webapp"
+	workingDir = file("${project.projectDir}/frontend")
+	args = ["run", "build"]
+}
+
+appNpmBuild.dependsOn appNpmInstall
+copyWebApp.dependsOn appNpmBuild
+compileJava.dependsOn copyWebApp
+
+node {
+	download = true
+
+	// Set the work directory for unpacking node
+	workDir = file("${project.buildDir}/nodejs")
+
+	// Set the work directory for NPM
+	npmWorkDir = file("${project.buildDir}/npm")
 }

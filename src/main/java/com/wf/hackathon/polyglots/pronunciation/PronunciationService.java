@@ -23,7 +23,7 @@ import java.util.Random;
 @Transactional
 public class PronunciationService {
 
-    String basePath = "";
+    String basePath = "/polyglots/audioclips/";
 
     @Autowired
     private final PronunciationRepo pronunciationRepo;
@@ -40,22 +40,22 @@ public class PronunciationService {
         String path;
         Voice voice;
 
+        //Check if VoiceName provided
+        if (voiceName != null) {
+            MsCognitiveServiceClient msCognitiveServiceClient = new MsCognitiveServiceClient();
+            System.out.println(voiceName);
+            path = msCognitiveServiceClient.generateSpeechAndSave(uid, fname + " " + lname, voiceName, basePath);
+            /*User user = new User(uid, fname, lname, country, path, new Date(), voiceName, voiceGender, false);
+            pronunciationRepo.save(user);*/
+            return path;
+        }
+
         //Check if user exists in DB
         User dbUser = pronunciationRepo.findByUid(uid);
         if (dbUser != null) {
             path = dbUser.getAudio_file_path();
             dbUser.setAudio_file_path(path);
             pronunciationRepo.save(dbUser);
-            return path;
-        }
-
-        //Check if VoiceName provided
-        if (voiceName != null) {
-            MsCognitiveServiceClient msCognitiveServiceClient = new MsCognitiveServiceClient();
-            System.out.println(voiceName);
-            path = msCognitiveServiceClient.generateSpeechAndSave(uid, fname + " " + lname, voiceName, basePath);
-            User user = new User(uid, fname, lname, country, path, new Date(), voiceName, voiceGender, false);
-            pronunciationRepo.save(user);
             return path;
         }
 
@@ -109,5 +109,12 @@ public class PronunciationService {
         } catch (IOException ex) {
             throw new FileStorageException("Could not store file " + fileName + ".wav" + ". Please try again!", ex);
         }
+    }
+
+    public User serviceOptOut(String uid, Boolean serviceOptOut) {
+        User dbUser = pronunciationRepo.findByUid(uid);
+        dbUser.setService_opt_out(serviceOptOut);
+
+        return pronunciationRepo.save(dbUser);
     }
 }
