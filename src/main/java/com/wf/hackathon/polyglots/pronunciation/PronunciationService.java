@@ -31,9 +31,13 @@ public class PronunciationService {
     @Autowired
     private final VoiceRepo voiceRepo;
 
-    public PronunciationService(PronunciationRepo pronunciationRepo, VoiceRepo voiceRepo) {
+    @Autowired
+    private FilesWrapper filesWrapper;
+
+    public PronunciationService(PronunciationRepo pronunciationRepo, VoiceRepo voiceRepo, FilesWrapper filesWrapper) {
         this.pronunciationRepo = pronunciationRepo;
         this.voiceRepo = voiceRepo;
+        this.filesWrapper = filesWrapper;
     }
 
     public String getPronunciation(String uid, String fname, String lname, String country, String voiceName, String voiceGender) {
@@ -99,7 +103,7 @@ public class PronunciationService {
                 user.setVoice_name(voiceName);
                 user.setVoice_gender(voiceGender);
                 Path targetLocation = fileStorageLocation.resolve(fileName);
-                Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+                filesWrapper.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
                 user.setAudio_file_path(targetLocation.toString());
                 pronunciationRepo.save(user);
             }
