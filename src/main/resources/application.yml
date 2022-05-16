@@ -9,14 +9,16 @@ spring:
 
 appdb:
   datasource:
-    jdbc-url: ""
-    username: ""
-    password: ""
+    jdbc-url: "jdbc:postgresql://20.127.243.191:5433/yugabyte"
+    username: "yugabyte"
+    password: "Hackathon22!"
     pool-name: "Hikari-yb-pool"
-    maximum-pool-size: 4
+    maxLifetime: 60000
+    maximum-pool-size: 15
     validation-query: "Select 1"
-    testOnBorrow: true
-
+    test-on-borrow: true
+    test-while-idle: true
+    max-life-time: 120000
 
 azure:
   cognitiveservice:
