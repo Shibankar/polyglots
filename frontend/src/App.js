@@ -2,7 +2,7 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";  //theme
 import "primereact/resources/primereact.min.css";                  //core css
 import "primeicons/primeicons.css";                                //icons
 import "./App.scss";
-import {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {SearchEmployee} from "./components/searchEmployee/SearchEmployee";
 import AppLogo from "./images/wf_logo_48px.png";
 import AlertsIcon from "./images/alert1.png";
@@ -14,15 +14,59 @@ import Santhosh from "./images/avatars/Santhosh.jpeg";
 import {CustomModal} from "./components/customModal/CustomModal";
 import {PlayPronunciation} from "./components/playPronunciation/PlayPronunciation";
 import {OverridePronunciation} from "./components/overridePronunciation/OverridePronunciation";
+import OptInIcon from "./images/optin.png"
+import OptOutIcon from "./images/optout.png"
+
+import {getUserById, saveOptOut} from "./api/PronunciationApi";
+
 
 function App(data) {
     const [selectedEmployee, setSelectedEmployee] = useState(undefined);
     const [showPlayModal, setShowPlayModal] = useState(false);
     const [showOverrideModal, setShowOverrideModal] = useState(false);
+    const [userVoiceData, setUserVoiceData] = useState(undefined);
+    const [generatedAudio, setGeneratedAudio] = useState(undefined);
+    const [optOut, setOptOut] = useState(false);
 
+
+    useEffect(() => {
+        if(selectedEmployee){
+        if (selectedEmployee.uid) {
+            getUserById(selectedEmployee.uid)
+                .then(data => {
+                    setUserVoiceData(data);
+                    setOptOut(data.service_opt_out);
+                })
+                .catch((e) => 
+                {
+                    setOptOut(false);
+                    console.error(e)
+                });
+        }}
+    }, [selectedEmployee, optOut]);
+    
     const getImage = (image) => {
-        return <img src={require(`./images/avatars/${image}.jpeg`)}  alt="profile" />
+
+        const tryRequire = (image) => {
+            try {
+             return require(`./images/avatars/${image}.jpeg`);
+            } catch (err) {
+                return require(`./images/avatars/${image}.png`);
+            }
+          };
+
+        return <img src={tryRequire(image)}  alt="profile" />
      }
+
+     const updateOptOut = (value) => {
+            saveOptOut(selectedEmployee.uid, value)
+                .then(data => {
+                    console.log('API Response', data);
+                    setOptOut(data.service_opt_out);
+                })
+                .catch(error => console.log("Error : ", error));
+        }
+    
 
     return (
         <>
@@ -101,9 +145,10 @@ function App(data) {
                 <div className="content-1">
                     <div className="name">
                         <span>{selectedEmployee.fullname}</span>
-                        <img src={PlayIcon} onClick={() => setShowPlayModal(true)} alt="play-icon" />
-                        <img src={RecordIcon} onClick={() => setShowOverrideModal(true)} alt="record-icon" />
-                        <img src={SilentIcon} alt="silent-icon" />
+                        {!optOut && <img src={PlayIcon} onClick={() => setShowPlayModal(true)} alt="play-icon" />}
+                        {!optOut && selectedEmployee.firstname == "Santhosh" && <img src={RecordIcon} onClick={() => setShowOverrideModal(true)} alt="record-icon" />}
+                        {!optOut && selectedEmployee.firstname == "Santhosh" && <img src={OptOutIcon} onClick={() => updateOptOut(true)} alt="Opt-Out" />}
+                        {optOut && selectedEmployee.firstname == "Santhosh" && <img src={OptInIcon} onClick={() => updateOptOut(false)} alt="Opt-In" />}
                     </div>
                     <div className="geography">{selectedEmployee.title}</div>
                     <div className="follow"> Follow this person</div>

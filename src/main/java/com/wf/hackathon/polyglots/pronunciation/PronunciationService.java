@@ -23,7 +23,7 @@ import java.util.Random;
 @Transactional
 public class PronunciationService {
 
-    String basePath = "/polyglots/audioclips/";
+    String basePath = "";
 
     @Autowired
     private final PronunciationRepo pronunciationRepo;
