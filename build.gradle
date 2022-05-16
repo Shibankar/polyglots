@@ -32,8 +32,7 @@ dependencies {
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.6.6'
 	implementation group: 'com.yugabyte', name: 'ysql', version: '42.2.7-yb-2'
 	implementation group: 'com.microsoft.cognitiveservices.speech', name: 'client-sdk', version: "1.21.0", ext: "jar"
-//	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
-//	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
+	implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.6.6'
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
